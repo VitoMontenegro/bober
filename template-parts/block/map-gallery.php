@@ -12,9 +12,22 @@
         <div class="map-gallery">
             <div class="map-gallery__map-block">
                 <div class="map-gallery__map-block__wrap">
-                    <div class="map-gallery__map">
-                        <img src="/wp-content/uploads/2024/08/map-gallery_map-img-desk.jpg" alt="Карта" class="map-gallery__map__img">
-                    </div>
+                    <?php if(get_field('iframe-block_code')): ?>
+                        <div class="map-gallery__map grid grid-cols-12 gap-32">
+                            <div class="col-span-12 md-col-span-6 ">
+                                <div class="iframe-block_code-wrap h-full">
+                                    <?php echo get_field('iframe-block_code');?>
+                                </div>
+                            </div>
+                            <div class="col-span-12 md-col-span-6 ">
+                                <img src="/wp-content/uploads/2024/08/map-gallery_map-img-desk.jpg" alt="Карта" class="map-gallery__map__img">
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <div class="map-gallery__map">
+                            <img src="/wp-content/uploads/2024/08/map-gallery_map-img-desk.jpg" alt="Карта" class="map-gallery__map__img">
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="map-gallery__map-block__info">
                     <?php if(get_field('map-gallery_map_address')){?>

@@ -15514,6 +15514,9 @@ div.iframe-full-video__text-bottom {
     font-weight: 400;
     line-height: normal;
 }
+.h-full {
+    height: 100%;
+}
 @media (min-width: 798px) {
     .md-col-span-6 {
         grid-column: span 6 / span 6;
