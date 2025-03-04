@@ -1,0 +1,216 @@
+@font-face {
+    font-family: "Manrope";
+    src: local("Manrope ExtraBold"), local("Manrope-ExtraBold"), url("../fonts/Manrope-ExtraBold.woff2") format("woff2"), url("../fonts/Manrope-ExtraBold.woff") format("woff"), url("../fonts/Manrope-ExtraBold.ttf") format("truetype");
+    font-weight: 800;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Manrope";
+    src: local("Manrope Bold"), local("Manrope-Bold"), url("../fonts/Manrope-Bold.woff2") format("woff2"), url("../fonts/Manrope-Bold.woff") format("woff"), url("../fonts/Manrope-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Manrope";
+    src: local("Manrope SemiBold"), local("Manrope-SemiBold"), url("../fonts/Manrope-SemiBold.woff2") format("woff2"), url("../fonts/Manrope-SemiBold.woff") format("woff"), url("../fonts/Manrope-SemiBold.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Manrope";
+    src: local("Manrope Medium"), local("Manrope-Medium"), url("../fonts/Manrope-Medium.woff2") format("woff2"), url("../fonts/Manrope-Medium.woff") format("woff"), url("../fonts/Manrope-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Manrope";
+    src: local("Manrope Regular"), local("Manrope-Regular"), url("../fonts/Manrope-Regular.woff2") format("woff2"), url("../fonts/Manrope-Regular.woff") format("woff"), url("../fonts/Manrope-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "AmaticSC";
+    src: local("AmaticSC Bold"), local("AmaticSC-Bold"), url("../fonts/AmaticSC-Bold.woff2") format("woff2"), url("../fonts/AmaticSC-Bold.woff") format("woff"), url("../fonts/AmaticSC-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+}
+*{
+	font-family: "Manrope";
+}
+.pdf {
+	width: 1000px;
+    margin: auto;
+    box-sizing: border-box;
+    background: url(/wp-content/themes/bober/images/bg-pdf.png) no-repeat;
+    background-size: contain;
+}
+.page{
+	padding: 70px 40px 0 40px;
+	margin-bottom: 120px;
+	box-sizing: border-box;
+	height:1400px;
+	overflow:hidden;
+}
+.pdf_logo {
+    text-align: center;
+}
+.pdf_logo>img {
+    width: 160px;
+}
+.phones_wrap {
+    display: flex;
+    font-weight: 600;
+    color: #664d47;
+}
+.phones_wrap>* {
+    width: calc(100% / 3);
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+h1 {
+    margin: 40px 0;
+    text-align: center;
+    font-size: 34px;
+	font-weight: 600;
+}
+h1 span {
+    display: block;
+    color: #898989;
+}
+.phone1_img,
+.phone2_img {
+    margin-right: 10px;
+}
+.prod__thead {
+    display: flex;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: bold;
+    justify-content: space-between;
+	margin-bottom: 20px;
+}
+.prod__wrapper {
+    margin-top: 20px;
+}
+.link_kp{
+	text-align: center;
+	    margin-top: 30px;
+}
+.prod__line {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+    box-shadow: 0px 4px 180px 0px #00000014;
+    z-index: 21321;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    padding: 0 30px;
+}
+.total {
+    text-align: right;
+	font-weight: 800;
+    font-size: 22px;
+    padding-top: 20px;
+	position: relative;
+}
+.old_total {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: -7px;
+    text-decoration: line-through;
+    color: #B08E7F;
+}
+.prod__img {
+    width: 150px;
+    margin-right: 10px;
+	padding: 8px 20px 8px 0;
+    border-right: 1px solid #F2F2F2;
+}
+.old_price {
+    color:#787878;
+    text-decoration: line-through;
+	font-size: 18px;
+}
+.total_num {
+    color: #EB6025;
+}
+.prod__img>img {width: 100%;}
+.prod__price {
+    width: 160px;
+    text-align: right;
+    margin-left: 10px;
+    font-size: 20px;
+}
+.total_price {
+    margin: 8px 0 0 0;
+    font-weight: bold;
+}
+.prod__name {
+    width: calc(100% - 150px - 160px);
+    padding: 0 36px;
+}
+a{
+	color: #000
+}
+.phones_wrap b{
+	font-weight:800
+}
+.prod__name a {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 22px;
+}
+.link_kp>a {
+    background: #FFE4D9;
+    color: #EB6025;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 12px 22px;
+    display: inline-block;
+    border-radius: 6px;
+    font-size: 18px;
+}
+.kp_ach {
+    display: flex;
+    margin-top: 50px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px -7px 101.8px 0px #00000029;
+}
+.kp_ach__item {
+    padding: 28px 22px;
+    width: calc(100% / 3);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    color: #4F4F4F;
+    font-weight: 700;
+    line-height: 20px;
+    font-size: 18px;
+}
+.kp_ach__item>img {
+    height: 38px;
+	margin-right:12px
+}
+.kp_manager {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 30px;
+    color: #99807A;
+    font-weight: 500;
+}
+
+.kp_manager_bold {
+    font-weight: 700;
+    color: #664D47;
+}
+
+.kp_manager__right {
+    text-align: right;
+}

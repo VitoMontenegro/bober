@@ -1,0 +1,401 @@
+
+
+/*APP-FORM*/
+/*GENERAL*/
+
+.hidden {
+    display: none;
+}
+
+.app-form__section h1 {
+    text-align: center;
+}
+.app-form {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+.app-form__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    position: relative;
+}
+
+.app-form__nav__item {
+    position: relative;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.07);
+    background: #ededed;
+    color: #664d47;
+    border-radius: 16px 16px 0 0;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    min-width: 140px;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    outline: none;
+}
+.app-form__nav__item:before {
+    content: '';
+    display: block;
+    width: 120%;
+    height: 25px;
+    position: absolute;
+    background: #fff;
+    bottom: -25px;
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+.app-form__wrap {
+    box-shadow: 0 0 80px 0 rgba(0, 0, 0, 0.07);
+    border-radius: 20px;
+    background-color: #fff;
+    padding:35px;
+    z-index: 1;
+    position: relative;
+}
+.app-form__nav__item.is-active {
+    background: #fff;
+    cursor: auto;
+}
+.app-form__nav__item[disabled] {
+    cursor: auto;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.app-form__step__item {
+    display: block;
+    position: relative;
+    margin-bottom: 20px;
+}
+.app-form__step__item__name {
+    font-weight: 400;
+    font-size: 18px;
+    padding-left: 2px;
+    display: block;
+    margin-bottom: 5px;
+}
+.app-form__field-text {
+    border-radius: 8px;
+    padding: 15px 15px 15px 15px;
+    width: 312px;
+    height: 50px;
+    border: none;
+    background: rgba(250, 240, 235, 0.5);
+    outline: none;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    color: #664d47;
+    width: 100%;
+}
+.app-form__field-text.is-error {
+    box-shadow: inset 0 0 0px 2px #FF0004;
+}
+.app-form__field-select {
+    border-radius: 8px;
+    padding: 15px 15px 15px 15px;
+    height: 50px;
+    border: none;
+    background: rgba(250, 240, 235, 0.5);
+    outline: none;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    color: #664d47;
+    width: 100%;
+    border-right: 15px solid transparent;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.app-form__step__item__error {
+    font-weight: 600;
+    font-size: 18px;
+    padding-left: 2px;
+    display: block;
+    color: #FF0004;
+}
+.app-form__step__item__error.hidden {
+    display: block;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.app-form__field-textarea {
+    border-radius: 8px;
+    padding: 15px 15px 15px 15px;
+    width: 312px;
+    height: 150px;
+    border: none;
+    background: rgba(250, 240, 235, 0.5);
+    outline: none;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: #664d47;
+    width: 100%;
+    resize: none;
+}
+
+.app-form__field-textarea.is-error {
+    box-shadow: inset 0 0 0px 2px #FF0004;
+}
+
+.app-form__btns-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    margin-top: 20px;
+}
+.app-form__btn {
+    border-radius: 8px;
+    background-color: #EB6025;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 100%;
+    border: none;
+    min-height: 50px;
+    min-width: 170px;
+    cursor: pointer;
+}
+.app-form__btn:hover {
+    background-color: #ffe4d9;
+    color: #EB6025;
+}
+
+.app-form__btn[disabled] {
+    opacity: 0.5;
+    background-color: #ffe4d9;
+    color: #EB6025;
+    cursor: auto;
+}
+
+
+/*STEP2*/
+.step2_map {
+    width: 100%;
+    height: 450px;
+    margin-bottom: 15px;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+}
+.step2-address__hint {
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    display: none;
+    position: absolute;
+    background: white;
+    z-index: 1000;
+}
+.app-form__field-textarea.step2-address {
+    resize: none;
+    overflow: hidden;
+    min-height: 50px;
+}
+
+
+.step2-address__hint div {
+    padding: 5px;
+    cursor: pointer;
+}
+.step2-address__hint div:hover {
+    background: #f0f0f0;
+}
+
+
+/*STEP3*/
+#datepicker-container {
+    display: inline-block;
+}
+.step3-desc_error_max {
+    position: absolute;
+    bottom: 0;
+}
+.ui-widget.ui-widget-content {
+    border: 1px solid #f2f2f2;
+}
+.ui-datepicker-header {
+    background: #efdcd2;
+    border: navajowhite;
+}
+.ui-datepicker-title {
+    color: #664d47;
+}
+.datepicker_info {
+    display: block;
+    border-radius: 8px;
+    padding: 15px 15px 15px 15px;
+    height: 50px;
+    border: none;
+    background: rgba(250, 240, 235, 0.5);
+    outline: none;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+    color: #664d47;
+    width: 100%;
+    max-width: 340px;
+    margin-bottom: 10px;
+    pointer-events: none;
+}
+.ui-datepicker-header .ui-corner-all,
+.ui-datepicker-header .ui-state-hover {
+    background:transparent!important;
+    border:none!important;
+}
+.app-form__step__item--upload-files{
+    border: 2px solid #f2f2f2;
+    padding: 20px;
+    border-radius: 10px;
+}
+.app-form__step__item--upload-files .app-form__step__item__name {
+    display: inline;
+}
+
+#uploadButto {
+    font-size: 18px;
+}
+
+div#previewContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.preview {
+    max-width: 164px;
+    position: relative;
+    display: block;
+    margin: 0;
+}
+div#previewContainer .preview-name {
+    margin: 0;
+    height: 24px;
+    padding-right: 0;
+    word-break: break-all;
+    font-size: 18px;
+    line-height: 22px;
+}
+.preview img, .preview video {
+    width: 100%;
+    max-width: 164px;
+    max-height: 200px;
+    border-radius: 8px;
+}
+.preview .remove-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 30px;
+    right: 5px;
+    background-color: #EB6025;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+/*success*/
+.app-form__success__wrap {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+.app-form__success__text {
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 25px;
+    display: block;
+}
+
+.app-form__step__item__name .required {
+    color: #FF0004;
+}
+
+/*RESPONSIVE*/
+@media (max-width: 800px){
+    .app-form__success__text {
+        font-size: 20px;
+        line-height: 23px;
+    }
+}
+@media (max-width: 660px){
+    .app-form__success__wrap {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .app-form__success__text__br {
+        display: none;
+    }
+}
+@media (max-width: 560px){
+    .app-form__wrap {
+        padding: 25px;
+    }
+    .app-form__nav__item {
+        padding: 10px;
+        min-width: 90px;
+        font-size: 16px;
+    }
+    .app-form__btn {
+        min-height: 45px;
+        min-width: 140px;
+    }
+}
+
+@media (max-width: 460px){
+    .app-form__success__text {
+        font-size: 18px;
+        line-height: 21px;
+    }
+    .app-form__success__img {
+        width: 60px;
+    }
+}
+@media (max-width: 440px){
+    #datepicker-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .app-form__btns-wrap {
+        gap: 10px;
+    }
+    .app-form__btn {
+        flex-grow: 1;
+        min-width: 80px;
+        padding: 5px 12px;
+    }
+}
+@media (max-width: 365px){
+    .app-form__wrap {
+        padding: 20px;
+    }
+    .app-form__nav__item:before {
+        height: 15px;
+        bottom: -15px;
+    }
+    .app-form__nav__item {
+        min-width: 80px;
+    }
+
+}
