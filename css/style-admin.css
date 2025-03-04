@@ -349,6 +349,14 @@ body.wp-admin .main-banner.menu-under-header {
 .wp-block-acf-flex-orange-col-3 .acf-block-component .acf-block-fields:after {
     background-image: url(../template-parts/preview/flex-orange-col-3.jpg);
 }
+.editor-block-list-item-acf-flex-orange-col-2 .block-editor-block-types-list__item-icon:before,
+.wp-block-acf-flex-orange-col-2 .acf-block-component .acf-block-fields:after {
+    background-image: url(../template-parts/preview/flex-orange-col-2.jpg);
+}
+.editor-block-list-item-acf-aspect-block .block-editor-block-types-list__item-icon:before,
+.wp-block-acf-aspect-block .acf-block-component .acf-block-fields:after {
+    background-image: url(../template-parts/preview/aspect-block.jpg);
+}
 .editor-block-list-item-acf-price-block .block-editor-block-types-list__item-icon:before,
 .wp-block-acf-price-block .acf-block-component .acf-block-fields:after {
     background-image: url(../template-parts/preview/price-block.jpg);

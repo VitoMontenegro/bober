@@ -15,29 +15,49 @@
 
             <?php //<div class="info-block-3__side">wrap</div>?>
 
-                <?php while( have_rows('info-block-3_item') ): the_row(); ?>
-                    <?php if(get_sub_field('info-block-3_item_text_left')){?>
-                        <div class="info-block-3__side__item">
-                            <?php the_sub_field('info-block-3_item_text_left');?>
-                        </div>
-                    <?php } ?>
-                <?php endwhile; ?>
+                <?php if(count(get_field('info-block-3_item')) > 1): ?>
+                    <?php while( have_rows('info-block-3_item') ): the_row(); ?>
+                        <?php if(get_sub_field('info-block-3_item_text_left')){?>
+                            <div class="info-block-3__side__item">
+                                <?php the_sub_field('info-block-3_item_text_left');?>
+                            </div>
+                        <?php } ?>
+                    <?php endwhile; ?>
 
-                <?php while( have_rows('info-block-3_item') ): the_row(); ?>
-                    <?php if(get_sub_field('info-block-3_item_text_mid')){?>
-                        <div class="info-block-3__side__item">
-                            <?php the_sub_field('info-block-3_item_text_mid');?>
-                        </div>
-                    <?php } ?>
-                <?php endwhile; ?>
+                    <?php while( have_rows('info-block-3_item') ): the_row(); ?>
+                        <?php if(get_sub_field('info-block-3_item_text_mid')){?>
+                            <div class="info-block-3__side__item">
+                                <?php the_sub_field('info-block-3_item_text_mid');?>
+                            </div>
+                        <?php } ?>
+                    <?php endwhile; ?>
+                    <?php while( have_rows('info-block-3_item') ): the_row(); ?>
+                        <?php if(get_sub_field('info-block-3_item_text_right')){?>
+                            <div class="info-block-3__side__item">
+                                <?php the_sub_field('info-block-3_item_text_right');?>
+                            </div>
+                        <?php } ?>
+                    <?php endwhile; ?>
+                <?php else : ?>
+                    <?php while( have_rows('info-block-3_item') ): the_row(); ?>
+                        <?php if(get_sub_field('info-block-3_item_text_left')){?>
+                            <div class="info-block-3__side__item only_one_line">
+                                <?php the_sub_field('info-block-3_item_text_left');?>
+                            </div>
+                        <?php } ?>
+                        <?php if(get_sub_field('info-block-3_item_text_mid')){?>
+                            <div class="info-block-3__side__item only_one_line">
+                                <?php the_sub_field('info-block-3_item_text_mid');?>
+                            </div>
+                        <?php } ?>
+                        <?php if(get_sub_field('info-block-3_item_text_right')){?>
+                            <div class="info-block-3__side__item only_one_line">
+                                <?php the_sub_field('info-block-3_item_text_right');?>
+                            </div>
+                        <?php } ?>
+                    <?php endwhile; ?>
+                <?php endif; ?>
 
-                <?php while( have_rows('info-block-3_item') ): the_row(); ?>
-                    <?php if(get_sub_field('info-block-3_item_text_right')){?>
-                        <div class="info-block-3__side__item">
-                            <?php the_sub_field('info-block-3_item_text_right');?>
-                        </div>
-                    <?php } ?>
-                <?php endwhile; ?>
 
             </div>
 

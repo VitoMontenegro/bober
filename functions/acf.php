@@ -82,7 +82,7 @@ function my_acf_init() {
             'render_callback'   => 'my_acf_block_render_callback',
             'category'          => 'kometetek-category',
         ));
-        
+
         // register block
         acf_register_block(array(
             'name'              => 'review-slider',
@@ -143,6 +143,12 @@ function my_acf_init() {
         acf_register_block(array(
             'name'              => 'flex-orange-col-3',
             'title'             => __('Блок с колонками 1'),
+            'render_callback'   => 'my_acf_block_render_callback',
+            'category'          => 'kometetek-category',
+        ));
+        acf_register_block(array(
+            'name'              => 'flex-orange-col-2',
+            'title'             => __('Блок с колонками 1 (2 колонки)'),
             'render_callback'   => 'my_acf_block_render_callback',
             'category'          => 'kometetek-category',
         ));
@@ -372,6 +378,12 @@ function my_acf_init() {
         acf_register_block(array(
             'name'              => 'iframe-block',
             'title'             => __('iframe-блок'),
+            'render_callback'   => 'my_acf_block_render_callback',
+            'category'          => 'kometetek-category',
+        ));
+        acf_register_block(array(
+            'name'              => 'aspect-block',
+            'title'             => __('aspect-block'),
             'render_callback'   => 'my_acf_block_render_callback',
             'category'          => 'kometetek-category',
         ));
