@@ -114,7 +114,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
             <?php endif; */?>
 
             <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                <label for="reg_phone"><?php _e('Телефон', 'woocommerce'); ?></label>
+                <label for="reg_phone"><?php _e('Телефон', 'woocommerce'); ?> <span class="required">*</span></label>
                 <input type="text" class="woocommerce-Input woocommerce-Input--text input-text bober-wc__form-auth__field" name="billing_phone" id="reg_phone" value="<?php echo ( ! empty( $_POST['billing_phone'] ) ) ? esc_attr( wp_unslash( $_POST['billing_phone'] ) ) : ''; ?>" />
             </p>
             <p class="woocommerce-form-row woocommerce-form<?php _e('Компания', 'woocommerce'); ?>-row--wide form-row form-row-wide">

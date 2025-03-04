@@ -692,7 +692,11 @@ function save_custom_registration_fields($customer_id) {
         update_user_meta($customer_id, 'billing_phone', sanitize_text_field($_POST['billing_phone']));
     }
 }
-
+add_action('woocommerce_register_post', function ($username, $email, $errors) {
+    if (empty($_POST['billing_phone'])) {
+        $errors->add('billing_phone_error', 'Ошибка: Пожалуйста, укажите номер телефона.');
+    }
+}, 10, 3);
 // Сохранение полей в профиле пользователя в админке
 add_action('personal_options_update', 'save_custom_user_profile_fields');
 add_action('edit_user_profile_update', 'save_custom_user_profile_fields');
@@ -929,14 +933,14 @@ add_filter('woocommerce_registration_auth_new_customer', '__return_false');
 add_action('woocommerce_before_customer_login_form', 'custom_registration_message');
 function custom_registration_message() {
     if (isset($_GET['registered']) && $_GET['registered'] == 'true') {
-        echo '<div class="woocommerce-message">С вами свяжется менеджер, сообщит пароль в личный кабинет и размер скидок на ваши заказы.</div>';
+        echo '<div class="woocommerce-message">С вами свяжется менеджер, отправит пароль для входа в личный кабинет и размер скидок на ваши заказы.</div>';
     }
 }
 // Функция для изменения текста
 function custom_woocommerce_text_strings( $translated_text, $text, $domain ) {
     switch ( $translated_text ) {
         case 'Ваша учетная запись создана. Данные для входа отправлены на ваш адрес электронной почты.' :
-            $translated_text = 'С вами свяжется менеджер, сообщит пароль в личный кабинет и размер скидок на ваши заказы.';
+            $translated_text = 'С вами свяжется менеджер, отправит пароль для входа в личный кабинет и размер скидок на ваши заказы.';
             break;
     }
     return $translated_text;
