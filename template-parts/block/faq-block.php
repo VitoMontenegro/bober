@@ -6,6 +6,10 @@
             <?php } ?>
             <button href="#" class="btn btn-orange faq-block__btn--js faq-block__btn--open-all">Открыть все</button>
         </div>
+        <?php if(get_field('faq-block_subtitle')){?>
+            <div class="default-page__text"><?php the_field('faq-block_subtitle');?></div>
+        <?php } ?>
+
 
         <?php if( have_rows('faq-block_item') ): ?>
         <div class="faq-block">
