@@ -15517,8 +15517,47 @@ div.iframe-full-video__text-bottom {
 .h-full {
     height: 100%;
 }
+.mt-30 {
+    margin-top: 30px;
+}
+
+.button_link {
+    border-radius: 8px;
+    background: #FFE4D9;
+    height: 50px;
+    width: 243px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration:none;
+    margin-top: 20px;
+    color: #262626;
+    transition: 0.15s;
+}
+.button_link span {
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px; /* 100% */
+}
+.button_link:hover {
+    color: #ffffff;
+    background-color: #99807a;
+}
 @media (min-width: 798px) {
     .md-col-span-6 {
         grid-column: span 6 / span 6;
+    }
+}
+@media (max-width: 560px) {
+    .sm-flex-col {
+        flex-direction: column;
+    }
+    .sm-hidden {
+        display: none!important;
+    }
+    .button_link {
+        width: 100%;
     }
 }

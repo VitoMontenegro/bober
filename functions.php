@@ -1,7 +1,7 @@
 <?php
 
 if ( ! defined( '_S_VERSION' ) ) {
-    define('_S_VERSION', '0.0+223');
+    define('_S_VERSION', '0.0+224');
 }
 $GLOBALS['youtube_id'] = 0; //Глобавльная переменная для id youtube видео
 $GLOBALS['page-template'] = ''; //Текущий шаблон (если нужен)
