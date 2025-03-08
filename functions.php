@@ -1138,7 +1138,3 @@ function get_arenda_price() {
         return '';
     }
 }
-
-
-
-?>

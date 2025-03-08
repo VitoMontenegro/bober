@@ -12,6 +12,24 @@ function custom_admin_menu() {
         'dashicons-products', // Иконка меню
         9 // Позиция в меню
     );
+    add_menu_page(
+        'Товары Аренда (woocommerce)',
+        'Товары А',
+        'manage_woocommerce',
+        'edit.php?post_type=product&product_cat=arenda-kofemashin',
+        '',
+        'dashicons-cart',
+        9
+    );
+    add_menu_page(
+        'Товары (Ремонт)',
+        'Товары Б',
+        'manage_woocommerce',
+        'edit.php?post_type=product&product_cat=category-b',
+        '',
+        'dashicons-cart',
+        9
+    );
 }
 function custom_produkcziya_page() {
     $category = get_term_by('slug', 'produkcziya', 'product_cat');

@@ -54,10 +54,10 @@ if(get_field('production_price_currency') == 'package'){
 
         <section class="section product-detail__section">
             <div class="container">
-
                 <ul class="breadcrumbs">
                     <li><a href="/">Главная</a></li>
                     <li><a href="/prodazha/">Продажа</a></li>
+                    <?php if($product_cat_parent) : ?>
                     <li>
                         <a href="<?php echo get_category_link($product_cat_parent->term_id);?>">
                             <?php
@@ -67,6 +67,7 @@ if(get_field('production_price_currency') == 'package'){
                             ?>
                         </a>
                     </li>
+                    <?php endif; ?>
                     <li>
                         <a href="<?php echo get_term_link($product_cat[0], 'product_cat');?>">
                             <?php
@@ -954,7 +955,7 @@ get_field('product_warranty')){?>
                             }
                             ?>
 
-                            <?php if ($current_cat_wbr){?>
+                            <?php if (isset($current_cat_wbr)){?>
                             <div class="product-desc__row">
                                 <div class="product-desc__row__left">
                                     Категория
@@ -1148,7 +1149,7 @@ get_field('product_warranty')){?>
 
 
 
-                <?php if ($product_cat_parent->term_id !== 182){//Кофейное оборудование //TODO ?>
+                <?php if ($product_cat_parent && $product_cat_parent->term_id !== 182){//Кофейное оборудование //TODO ?>
                     <?php if(get_field('product_spareParts')){?>
                         <?php
                             $product_ids = explode(',', get_field('product_spareParts'));
@@ -1215,7 +1216,7 @@ get_field('product_warranty')){?>
                     <?php } ?>
 
                     <?php } //TODO?>
-                <?php if ($product_cat_parent->term_id !== 182){//Кофейное оборудование //TODO ?>
+                <?php if ($product_cat_parent && $product_cat_parent->term_id !== 182){//Кофейное оборудование //TODO ?>
 
                     <?php if(get_field('product_accessories')){?>
                         <?php
