@@ -106,6 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                     $total = 0; // Инициализация переменной для хранения общей суммы
                     $product_count = 0; //Общее число товаров
                     ?>
+                    <?php if(isset($products) && is_array($products)) : ?>
                     <?php foreach ($products as $item): ?>
                         <?php
                         $product = wc_get_product($item['product']);
@@ -144,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                                             <?php if($sale): ?>
                                                 <?php
                                                 $total += $sale_price*$count;
-                                                $total_old += $price*$count;
+                                                if(isset($total_old)) $total_old += $price*$count;
                                                 ?>
                                                 <div class="old_price"><?=number_format($price, 0, '.', ' ')?> ₽</div>
                                                 <div class="prod__price_num">
@@ -153,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                                                 <?php else: ?>
                                                 <?php
                                                 $total += $price*$count;
-                                                $total_old += $price*$count;
+                                                if(isset($total_old)) $total_old += $price*$count;
                                                 ?>
                                                 <div class="prod__price_num">
                                                     <?=number_format($price, 0, '.', ' ')?> ₽ <span class="price_count">x <?=$count?></span>
@@ -172,6 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                             </td>
                         </tr>
                     <?php endforeach; ?>
+                    <?php endif; ?>
                     </tbody>
                 </table>
         </div>

@@ -301,8 +301,10 @@ if($product_cat_parent && $product_cat_parent->slug == 'prodazha'){
                                                     }
 //                                                    //
                                                     $production_tea_bagged_item = get_field('production_tea_bagged');
-                                                    foreach ($production_tea_bagged_item as $item) {
-                                                        $production_tea_bagged[] = $item;
+                                                    if(isset($production_tea_bagged_item) && is_array($production_tea_bagged_item)) {
+                                                        foreach ($production_tea_bagged_item as $item) {
+                                                            $production_tea_bagged[] = $item;
+                                                        }
                                                     }
 
                                                     //Товары по API
