@@ -3,6 +3,7 @@
  * sigle-product (sigle-product_arenda.php)
  * @package WordPress
  */
+global $product;
 ?>
 <?php get_header(); ?>
 
@@ -167,8 +168,9 @@
                             <div class="product-detail__info-block__price">
 
                                 <?php //Цена
+                                $product_id = $product->get_id();
 
-                                $discounted_price = get_field('product_arenda_price');
+                                $discounted_price = get_discounted_price($product_id);
                                 if ($discounted_price) {
 
                                     $discounted_price = (float)$discounted_price;
@@ -465,7 +467,11 @@
                         </div>
 
                         <div class="product-detail__info__btns">
-                            <button type="button" class="btn product-detail__info__btns__item btn-add btn-modal-open--contact-form-arenda">Арендовать<span class="icon-preloader" data-preloader="<?php echo get_the_ID(); ?>"></span></button>
+
+                            <button type="button" class="btn product-detail__info__btns__item btn-buy" onclick="addToCart(<?php echo esc_attr( $product->get_id() ) ?>)">
+                                В корзину
+                                <span class="icon-preloader" data-preloader="<?php echo $product->get_id();?>" data-title="<?php the_title(); ?>"></span>
+                            </button>
 
                             <?php if(get_field('option_soc_whatsapp', 'option')) { ?>
                                 <a href="<?php the_field('option_soc_whatsapp', 'option'); ?>" target="_blank" class="btn product-detail__info__btns__item btn-whatsapp" target="_blank">

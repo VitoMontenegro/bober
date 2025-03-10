@@ -9,7 +9,7 @@
 
             // Вызов функции в шаблоне с пользовательским порядком
             //Продукция, Кофейное оборудование, его потомки 3лвл                 //id - категорий 2 лвл
-            $custom_order = array(4366,182,186,185,187,184,188,183,         22,51,124,135,160,189);
+            $custom_order = array(182,186,185,187,184,188,183,         22,51,124,135,160,189);
             display_product_categories_with_count(17, 0, $custom_order);//prodazha
 
             //prodazha
@@ -19,6 +19,7 @@
                     'taxonomy'     => 'product_cat',
                     'parent'       => $parent_id,
                     'hide_empty'   => false,
+                    'exclude_tree' => array(4366), // Исключаем категорию 4366 и её дочерние
                 );
 
                 $product_categories = get_terms($args);

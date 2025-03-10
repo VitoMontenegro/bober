@@ -117,7 +117,7 @@
 
                 <?php
                 //Фильтры
-                $args = array(
+               /* $args = array(
                     'post_type' => 'product_arenda',
                     'posts_per_page' => -1,
                     'meta_query' => array(
@@ -127,8 +127,29 @@
                             'compare' => 'IN'
                         )
                     )
+                );*/
+
+                $args = array(
+                    'posts_per_page' => 12,
+                    'post_type' => 'product',
+                    'post_status' => 'publish',
+                    'paged' => get_query_var('paged') ?: 1,
+                    'tax_query' => array(
+                        array(
+                            'taxonomy' => 'product_cat',
+                            'field' => 'slug',
+                            'terms' => $term_arenda,
+                            'include_children' => true,     // Включаем подкатегории
+                            'operator' => 'IN',
+                        ),
+                    ),
+                    'orderby' => array(
+                        'meta_value_num' => 'DESC',
+                        'date' => 'DESC'  // Добавляем вторичную сортировку по дате
+                    ),
                 );
 
+                $loop = new WP_Query($args);
                 $posts_filter = get_posts($args);
 
                 $product_arenda_performance_values = array();
@@ -141,6 +162,7 @@
                 $product_arenda_func_label = array();
 
                 foreach ($posts_filter as $post) {
+                    $fields = get_fields($post->ID);
                     $performance_value = get_field('product_arenda_performance', $post->ID);
                     if ($performance_value && !in_array($performance_value, $product_arenda_performance_values)) {
                         $product_arenda_performance_values[] = $performance_value;
@@ -164,24 +186,6 @@
                 }
 
 
-                //Бренды
-//                if (!empty($product_arenda_brands_values)) {
-//                    echo '<div class="catalog__filter__item">';
-//                    echo '<div class="catalog__filter__item__title">Марка</div>';
-//                    echo '<div class="catalog__filter__item__list">';
-//
-//                    foreach ($product_arenda_brands_values as $key => $value) {
-//                        if($key == 5){echo '<button class="filter-item filter-item__more"><i class="icon"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.351293 0.351294C0.819685 -0.117098 1.5791 -0.117098 2.04749 0.351293L10.6012 8.90498L10.6011 2.67455C10.6011 2.01215 11.1381 1.47515 11.8005 1.47514C12.4629 1.47513 12.9999 2.01211 12.9999 2.67452L13 11.8006C13 12.1187 12.8736 12.4238 12.6487 12.6487C12.4238 12.8736 12.1187 13 11.8006 13L2.80433 13C2.14192 13 1.60494 12.463 1.60494 11.8006C1.60494 11.1382 2.14192 10.6012 2.80433 10.6012L8.90502 10.6012L0.351294 2.04749C-0.117098 1.5791 -0.117098 0.819685 0.351293 0.351294Z" fill="#EB6025" /></svg></i><span class="filter-item__name">Развернуть</span></button>';};
-//                        echo '<label class="filter-item">';
-//                        echo '<input type="checkbox" value="' . esc_attr($value) . '" class="filter-item__checkbox is-product_arenda_mark">';
-//                        echo '<div class="filter-item__checkbox-decoration"></div>';
-//                        echo '<div class="filter-item__name">' . esc_html($value) . '</div>';
-//                        echo '</label>';
-//                    }
-//
-//                    echo '</div>';
-//                    echo '</div>';
-//                }
 
                 //Количество групп
                 if (!empty($product_arenda_group_values)) {
@@ -280,26 +284,34 @@
                 <div class="catalog__list" data-type="<?php foreach ($term_arenda as $item){echo ''. $item . ',';};?>">
                     <?php
 
-                    $loop = new WP_Query(array(
+                    $args = array(
                         'posts_per_page' => 12,
-                        'post_type' => 'product_arenda',
-                        'post_status' => 'publish',
-                        'paged' => get_query_var('paged') ?: 1,
-                        'meta_query' => array(
+                        'post_type'      => 'product',
+                        'post_status'    => 'publish',
+                        'paged'          => max(1, get_query_var('paged')), // Исправили возможную ошибку
+                        'tax_query'      => array(
                             array(
-                                'key' => 'product_arenda_type',
-                                'value' => $term_arenda,
-                                'compare' => 'IN'
-                            )
-                        )
-                    ));
+                                'taxonomy'         => 'product_cat',
+                                'field'            => 'slug', // Или 'term_id', если $term_arenda — ID
+                                'terms'            => $term_arenda,
+                                'include_children' => true,
+                                'operator'         => 'IN',
+                            ),
+                        ),
+                        'orderby'        => array(
+                            'meta_value_num' => 'DESC',
+                            'date'           => 'DESC'
+                        ),
+                    );
+
+                    $loop = new WP_Query($args);
 
                     $total_products = $loop->found_posts;
 
                     if ($loop->have_posts()) {
                         while ($loop->have_posts()) {
                             $loop->the_post();
-                            get_template_part('/template-parts/loop-arenda-item');
+                            get_template_part('/template-parts/loop-product-item');
                         }
                     }
                     wp_reset_postdata();

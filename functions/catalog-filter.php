@@ -5,6 +5,7 @@ add_action( 'wp_ajax_arenda_filter', 'true_arenda_filter' );
 add_action( 'wp_ajax_nopriv_arenda_filter', 'true_arenda_filter' );
 
 function true_arenda_filter() {
+    $args_meta_key = '';
 
 //    echo '<pre>';
 //    echo print_r($_POST);
@@ -12,16 +13,18 @@ function true_arenda_filter() {
 
     $args = array(
         'posts_per_page' => 12,
-        'post_type' => 'product_arenda',
+        'post_type' => 'product',
         'post_status' => 'publish',
         'paged' => 1,
+        'meta_key' => $args_meta_key,
+
     );
 
 //    //sort
     if (!empty($_POST['sort'])) {
         $args['orderby'] = 'meta_value_num name';
         $args['order'] = $_POST['sort'];
-        $args['meta_key'] = 'product_arenda_price';
+        $args['meta_key'] = '_price';
     }
 
 //    //Цена
@@ -34,7 +37,7 @@ function true_arenda_filter() {
         $filter_price_to = $_POST['filter_price_to'];
     }
     $args_price = array(
-        'key' => 'product_arenda_price',
+        'key' => '_price',
         'value' => array($filter_price_from, $filter_price_to),
         'type' => 'numeric',
         'compare' => 'BETWEEN',
@@ -47,10 +50,10 @@ function true_arenda_filter() {
 
     //Страница
     if (!empty($_POST['term_arenda'])) {
-        $meta_query[] = array(
-            'key' => 'product_arenda_type',
-            'value' => $_POST['term_arenda'],
-            'compare' => 'IN',
+        $tax_query[] = array(
+            'taxonomy' => 'product_cat',
+            'field' => 'slug',
+            'terms' => $_POST['term_arenda']
         );
     }
 
@@ -120,7 +123,6 @@ function true_arenda_filter() {
     $args['meta_query'] = $meta_query;
     $args['tax_query'] = $tax_query;
 
-    $loop = new WP_Query($args);
 
 //    echo '<pre>';
 //    echo print_r($args);
@@ -134,7 +136,7 @@ function true_arenda_filter() {
     if ($loop->have_posts()) {
         while ($loop->have_posts()) {
             $loop->the_post();
-            get_template_part('/template-parts/loop-arenda-item');
+            get_template_part('/template-parts/loop-product-item');
         }
     }
 

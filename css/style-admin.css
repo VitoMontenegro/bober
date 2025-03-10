@@ -1118,7 +1118,7 @@ td.date.column-date {
     width: 20px;
     height: 20px;
 }
-#publishing-action {
+.post-type-kp #publishing-action {
     display:none;
 }
 .kp_pdf-gen-hidden,

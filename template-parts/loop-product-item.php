@@ -47,6 +47,13 @@
             $product_name = $product_cat[0]->name;
             $product_name = str_replace('.', '.<wbr>', $product_name);
             echo $product_name;
+
+            if (get_field('product_arenda_subtype',get_the_ID())) {
+                $product_arenda_subtype = get_field_object('product_arenda_subtype', get_the_ID());
+                $product_arenda_subtype_value = $product_arenda_subtype['value'];
+                $product_arenda_subtype_label = $product_arenda_subtype['choices'][$product_arenda_subtype_value];
+                echo ', ' . esc_html($product_arenda_subtype_label);
+            }
             ?>
         </span>
 
@@ -71,9 +78,10 @@
             $formatted_price = number_format($formatted_price, 0, '.', ' ');
 
             $product_id = $product->get_id();
-
             //Цена за
-            if(get_field('production_price_currency') == 'package'){
+            if($product_cat[0]->slug === 'arenda-superavtomaticheskikh' || $product_cat[0]->slug === 'arenda-rozhkovikh'){
+                $currency_value = 'руб/мес';//Упаковку
+            } elseif (get_field('production_price_currency') == 'package'){
                 $currency_value = 'руб/уп';//Упаковку
             } elseif(get_field('production_price_currency') == 'rub'){
                 $currency_value = 'руб';//Упаковку

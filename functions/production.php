@@ -14,7 +14,7 @@ function custom_admin_menu() {
     );
     add_menu_page(
         'Товары Аренда (woocommerce)',
-        'Товары А',
+        'Товары Аренда (woocommerce)',
         'manage_woocommerce',
         'edit.php?post_type=product&product_cat=arenda-kofemashin',
         '',
@@ -23,14 +23,29 @@ function custom_admin_menu() {
     );
     add_menu_page(
         'Товары (Ремонт)',
-        'Товары Б',
+        'Товары (Ремонт)',
         'manage_woocommerce',
-        'edit.php?post_type=product&product_cat=category-b',
+        'edit.php?post_type=product&product_cat=remont',
         '',
         'dashicons-cart',
         9
     );
 }
+function exclude_categories_from_products_list($query) {
+    global $pagenow, $post_type;
+
+    if (is_admin() && $pagenow == 'edit.php' && $post_type == 'product' && !isset($_GET['product_cat'])) {
+        $query->set('tax_query', array(
+            array(
+                'taxonomy' => 'product_cat',
+                'field'    => 'slug',
+                'terms'    => array('arenda-kofemashin', 'remont'),
+                'operator' => 'NOT IN'
+            )
+        ));
+    }
+}
+add_action('pre_get_posts', 'exclude_categories_from_products_list');
 function custom_produkcziya_page() {
     $category = get_term_by('slug', 'produkcziya', 'product_cat');
     if (!$category) {
@@ -165,4 +180,123 @@ function custom_produkcziya_page() {
     echo '</div>';
 }
 
+//шаблон для аренды
+add_filter('template_include', function($template) {
+    if (is_singular('product')) {
+        global $post;
+        $terms = wp_get_post_terms($post->ID, 'product_cat');
 
+        if (!empty($terms) && !is_wp_error($terms)) {
+            foreach ($terms as $term) {
+                if ($term->slug === 'arenda-superavtomaticheskikh') {
+                    return get_template_directory() . '/single-product_arenda.php';
+                }
+                if ($term->slug === 'arenda-rozhkovikh') {
+
+                    var_dump($term->slug);
+                    return get_template_directory() . '/single-product_arenda.php';
+                }
+            }
+        }
+    }
+    return $template;
+}, 99);
+
+
+//Исключение товаров "ремонт" из каталога, поиска и виджетов
+add_action('template_redirect', function() {
+    if (is_singular('product')) {
+        global $post;
+        $terms = wp_get_post_terms($post->ID, 'product_cat');
+
+        foreach ($terms as $term) {
+            if (term_is_ancestor_of(get_term_by('slug', 'remont', 'product_cat')->term_id, $term->term_id, 'product_cat') || $term->slug === 'remont') {
+                wp_redirect(home_url()); // Перенаправляем на главную
+                exit;
+            }
+        }
+    }
+});
+
+//Исключение товаров из каталога, поиска и виджетов
+add_action('pre_get_posts', function($query) {
+    if (!is_admin() && $query->is_main_query() && (is_shop() || is_product_category() || is_search())) {
+        $term = get_term_by('slug', 'remont', 'product_cat');
+        if ($term) {
+            $query->set('tax_query', array(
+                array(
+                    'taxonomy' => 'product_cat',
+                    'field'    => 'id',
+                    'terms'    => $term->term_id,
+                    'operator' => 'NOT IN',
+                    'include_children' => true
+                ),
+            ));
+        }
+    }
+});
+///Исключение категорий из списка категорий (виджеты, меню, архивы)
+add_filter('woocommerce_product_categories_widget_args', function($args) {
+    $term = get_term_by('slug', 'remont', 'product_cat');
+    if ($term) {
+        $args['exclude'] = array_merge($args['exclude'] ?? [], [$term->term_id]);
+    }
+    return $args;
+});
+
+/*add_filter('get_terms', function($terms, $taxonomies, $args) {
+    if (in_array('product_cat', (array)$taxonomies)) {
+        $term = get_term_by('slug', 'remont', 'product_cat');
+        if ($term) {
+            $terms = array_filter($terms, function($t) use ($term) {
+                return !term_is_ancestor_of($term->term_id, $t->term_id, 'product_cat') && $t->term_id !== $term->term_id;
+            });
+        }
+    }
+    return $terms;
+}, 10, 3);*/
+add_action('template_redirect', function() {
+    if (is_product_category()) {
+        $term = get_queried_object();
+        $remont_term = get_term_by('slug', 'remont', 'product_cat');
+
+        if ($remont_term && (term_is_ancestor_of($remont_term->term_id, $term->term_id, 'product_cat') || $term->slug === 'remont')) {
+            wp_redirect(home_url()); // Перенаправляем на главную
+            exit;
+        }
+    }
+});
+
+
+add_filter('post_type_link', function ($url, $post) {
+    if ($post->post_type === 'product') {
+        $terms = wp_get_post_terms($post->ID, 'product_cat');
+
+        // Проверяем, есть ли товар в категории "prodazha" (или её дочерних)
+        $in_prodazha = false;
+        foreach ($terms as $term) {
+            if ($term->slug === 'prodazha' || term_is_ancestor_of(get_term_by('slug', 'prodazha', 'product_cat')->term_id, $term->term_id, 'product_cat')) {
+                $in_prodazha = true;
+                break;
+            }
+        }
+
+        if ($in_prodazha) {
+            // Берём только основную (первая в списке) категорию
+            $main_category = $terms[0]->slug;
+            $url = home_url('/' . $main_category . '/' . $post->post_name . '/');
+        }
+    }
+    return $url;
+}, 10, 2);
+add_action('template_redirect', function () {
+    if (is_singular('product')) {
+        $correct_url = get_permalink();
+        $current_url = home_url($_SERVER['REQUEST_URI']);
+
+        if (strpos($current_url, '/prodazha/') !== false && $correct_url !== $current_url) {
+            wp_redirect($correct_url, 301);
+            exit;
+        }
+    }
+});
