@@ -8,33 +8,40 @@
             <?php the_field('map-gallery_text');?>
         </div>
         <?php } ?>
-
         <div class="map-gallery">
             <div class="map-gallery__map-block">
-                <div class="map-gallery__map-block__wrap">
-                    <?php if(get_field('iframe-block_code')): ?>
-                        <div class="map-gallery__map grid grid-cols-12 gap-32">
+                <?php if(get_field('iframe-block_code')): ?>
+                    <div class="map-gallery__map-block__wrap">
+                        <div class="map-gallery__map grid grid-cols-12 gap-32 sm-gap-15">
                             <div class="col-span-12 md-col-span-6 ">
                                 <div class="iframe-block_code-wrap h-full">
                                     <?php echo get_field('iframe-block_code');?>
                                 </div>
                             </div>
-                            <div class="col-span-12 md-col-span-6 ">
+                            <div class="col-span-12 md-col-span-6 position-relative">
                                 <img src="/wp-content/uploads/2024/08/map-gallery_map-img-desk.jpg" alt="Карта" class="map-gallery__map__img">
+                                <div class="left_map_info">
+                                    <?php if(get_field('map-gallery_map_address')){?>
+                                        <div class="map-gallery__map-block__info__text" style="    font-size: 16px;"><?php the_field('map-gallery_map_address');?></div>
+                                    <?php } ?>
+                                    <button class="map-gallery__map-block__info__btn btn-modal-open--contact-form-popup">Запись на тестирование</button>
+                                </div>
                             </div>
                         </div>
-                    <?php else: ?>
-                        <div class="map-gallery__map">
-                            <img src="/wp-content/uploads/2024/08/map-gallery_map-img-desk.jpg" alt="Карта" class="map-gallery__map__img">
-                        </div>
-                    <?php endif; ?>
-                </div>
-                <div class="map-gallery__map-block__info">
-                    <?php if(get_field('map-gallery_map_address')){?>
-                    <div class="map-gallery__map-block__info__text"><?php the_field('map-gallery_map_address');?></div>
-                    <?php } ?>
-                    <button class="map-gallery__map-block__info__btn btn-modal-open--contact-form-popup">Запись на тестирование</button>
-                </div>
+                    </div>
+                <?php else: ?>
+                    <div class="map-gallery__map-block__wrap">
+                            <div class="map-gallery__map">
+                                <img src="/wp-content/uploads/2024/08/map-gallery_map-img-desk.jpg" alt="Карта" class="map-gallery__map__img">
+                            </div>
+                    </div>
+                    <div class="map-gallery__map-block__info">
+                        <?php if(get_field('map-gallery_map_address')){?>
+                            <div class="map-gallery__map-block__info__text"><?php the_field('map-gallery_map_address');?></div>
+                        <?php } ?>
+                        <button class="map-gallery__map-block__info__btn btn-modal-open--contact-form-popup">Запись на тестирование</button>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <?php /*
