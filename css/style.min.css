@@ -6470,7 +6470,7 @@ input[type=number] {
 }
 
 .product-detail__gallery {
-    width: calc(45% - 32px);
+    width: calc(40% - 32px);
     box-shadow: 0 0 80px 0 rgba(0, 0, 0, 0.05);
     border-radius: 24px;
     overflow: hidden;
@@ -6517,7 +6517,7 @@ input[type=number] {
 }
 
 .product-detail__info {
-    width: 55%;
+    width: 60%;
 }
 .product-detail__info__mobile {
     display: none;

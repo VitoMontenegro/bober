@@ -3,36 +3,6 @@
  * sigle-product (sigle-product.php)
  * @package WordPress
  */
-
-// Получаем все настройки для используемых полей
-$fields = [
-    'production_degree_roasting',
-    'production_country',
-    'production_tea_weight',
-//                                        'production_tea_bagged',
-    'production_tea_color'
-];
-$field_settings = [];
-foreach ($fields as $field_name) {
-    $field_settings[$field_name] = acf_get_field($field_name);
-}
-// Функция для вывода значений
-function render_field_values($field_name, $field_settings) {
-    $values = get_field($field_name); // Получаем значение поля
-    if (!empty($values) && isset($field_settings[$field_name]['choices'])) {
-        $choices = $field_settings[$field_name]['choices']; // Возможные значения
-        if (is_array($values)) {
-            // Если массив, преобразуем ключи в значения
-            return implode(', ', array_map(function($key) use ($choices) {
-                return $choices[$key] ?? $key;
-            }, $values));
-        } else {
-            // Если одно значение
-            return $choices[$values] ?? $values;
-        }
-    }
-    return $values;
-}
 ?>
 <?php get_header(); ?>
 
@@ -276,8 +246,358 @@ if(get_field('production_price_currency') == 'package'){
 
                     </div>
 
-                    <?php if (get_field('api_product')){ //Обычный товар?>
-                        <div class="product-detail__info-block">
+                    <div class="product-detail__info-block">
+
+                        <!--                        --><?php //if($prod_attr){?>
+                        <div class="product-detail__info-block__table__wrap">
+                            <div class="product-detail__info-block__table">
+                                <div class="product-detail__info-block__table__head">
+                                    <div class="product-detail__info-block__table__head__left">
+                                        <span>Тех. характеристики</span>
+                                    </div>
+                                    <button data-scroll="#product-desc__faq"
+                                            class="product-detail__info-block__table__head__right js-smooth-scrolling">
+                                        Подробнее
+                                    </button>
+                                </div>
+                                <div class="product-detail__info-block__table__body custom-scroll<?php // custom-scroll ?>">
+
+                                    <?php if($product->get_sku()){?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Код
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php echo $product->get_sku();?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+
+                                    <?php //ПРОДУКЦИЯ
+                                    // Получаем все настройки для используемых полей
+                                    $fields = [
+                                        'production_degree_roasting',
+                                        'production_country',
+                                        'production_tea_weight',
+//                                        'production_tea_bagged',
+                                        'production_tea_color'
+                                    ];
+                                    $field_settings = [];
+                                    foreach ($fields as $field_name) {
+                                        $field_settings[$field_name] = acf_get_field($field_name);
+                                    }
+                                    // Функция для вывода значений
+                                    function render_field_values($field_name, $field_settings) {
+                                        $values = get_field($field_name); // Получаем значение поля
+                                        if (!empty($values) && isset($field_settings[$field_name]['choices'])) {
+                                            $choices = $field_settings[$field_name]['choices']; // Возможные значения
+                                            if (is_array($values)) {
+                                                // Если массив, преобразуем ключи в значения
+                                                return implode(', ', array_map(function($key) use ($choices) {
+                                                    return $choices[$key] ?? $key;
+                                                }, $values));
+                                            } else {
+                                                // Если одно значение
+                                                return $choices[$values] ?? $values;
+                                            }
+                                        }
+                                        return $values;
+                                    }
+                                    ?>
+                                    <?php if ($values = get_field('production_degree_roasting')) { ?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Степень обжарки
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php echo render_field_values('production_degree_roasting', $field_settings); ?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                    <?php if ($values = get_field('production_country')) { ?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Страна выращивания
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php echo render_field_values('production_country', $field_settings); ?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                    <?php /*if(get_field('production_weight')) { ?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Вес
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php the_field('production_weight'); ?>
+                                            </div>
+                                        </div>
+                                    <?php } */?>
+
+                                    <?php if( have_rows('production_char') ): ?>
+                                        <?php while( have_rows('production_char') ): the_row(); ?>
+                                            <div class="product-detail__info-block__table__body__row">
+                                                <div class="product-detail__info-block__table__body__row__left">
+                                                    <?php the_sub_field('production_char_left');?></php>
+                                                </div>
+                                                <div class="product-detail__info-block__table__body__row__right">
+                                                    <?php the_sub_field('production_char_right');?>
+                                                </div>
+                                            </div>
+                                        <?php endwhile; ?>
+                                    <?php endif; ?>
+
+
+                                    <?php if ($values = get_field('production_tea_weight')) { ?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Тип чая
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php echo render_field_values('production_tea_weight', $field_settings); ?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+                                    <?php /*if ($values = get_field('production_tea_bagged')) { ?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Пакетированный
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php echo render_field_values('production_tea_bagged', $field_settings); ?>
+                                            </div>
+                                        </div>
+                                    <?php }*/ ?>
+
+                                    <?php if ($values = get_field('production_tea_color')) { ?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Вид чая
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php echo render_field_values('production_tea_color', $field_settings); ?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+
+                                    <?php //Атрибуты
+                                    foreach ($prod_attr as $key => $value) {
+                                        echo '<div class="product-detail__info-block__table__body__row">';
+                                        echo '<div class="product-detail__info-block__table__body__row__left">';
+                                        echo wc_attribute_label( $value['name'] ) . ": "; // Выводим наименование атрибута
+                                        echo '</div>';
+                                        echo '<div class="product-detail__info-block__table__body__row__right">';
+                                        foreach ( $value->get_terms() as $pa ) { // Выборка значения заданного атрибута
+                                            echo ' '.$pa->name.' '; // Выводим значение атрибута
+                                        }
+                                        echo '</div>';
+                                        echo '</div>';
+                                    }
+                                    ?>
+
+                                    <?php /*
+                                    <div class="product-detail__info-block__table__body__row">
+                                        <div class="product-detail__info-block__table__body__row__left">
+                                            Категория
+                                        </div>
+                                        <div class="product-detail__info-block__table__body__row__right">
+                                            <?php
+                                            $current_cat = strip_tags(wc_get_product_category_list($product->get_id()));
+                                            $current_cat_wbr = $current_cat;
+                                            $current_cat_wbr = str_replace('.', '.<wbr>', $current_cat_wbr);
+                                            echo $current_cat_wbr;
+                                             ?>
+                                        </div>
+                                    </div> */ ?>
+                                    <?php if($product->get_tag_ids()){?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Бренд
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php
+
+                                                $terms = get_terms( [
+                                                    'taxonomy' => 'product_tag',
+                                                    'include'  => $product->get_tag_ids()
+                                                ] );
+                                                foreach ($terms as $term){
+                                                    echo $term->name;
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+                                    <?php if(get_field('product_model')){?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Модель
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php the_field('product_model');?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+                                    <?php if(get_field('product_country')){?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Страна
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php the_field('product_country');?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+                                    <!--                                    <div class="product-detail__info-block__table__body__row">-->
+                                    <!--                                        <div class="product-detail__info-block__table__body__row__left">-->
+                                    <!--                                            Артикул-->
+                                    <!--                                        </div>-->
+                                    <!--                                        <div class="product-detail__info-block__table__body__row__right">-->
+                                    <!--                                            --->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
+
+                                    <?php if(get_field('product_unit')){?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Единица измерения
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php the_field('product_unit');?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+
+                                    <?php if(get_field('product_weightUnit')){?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Единица измерения веса
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php the_field('product_weightUnit');?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+                                    <?php if(get_field('product_sizeNet_length')){?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Габариты (Длина)
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php the_field('product_sizeNet_length');?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+
+                                    <?php if(get_field('product_sizeNet_width')){?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Габариты (Ширина)
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php the_field('product_sizeNet_width');?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+
+                                    <?php if(get_field('product_sizeNet_height')){?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Габариты (Высота)
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php the_field('product_sizeNet_height');?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+
+                                    <?php if(get_field('product_weightNet')){?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Вес
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php the_field('product_weightNet');?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+                                    <?php if(get_field('product_sizeGross_length')){?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Габариты в упаковке (Длина)
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php the_field('product_sizeGross_length');?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+                                    <?php if(get_field('product_sizeGross_width')){?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Габариты в упаковке (Ширина)
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php the_field('product_sizeGross_width');?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+                                    <?php if(get_field('product_sizeGross_height')){?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Габариты в упаковке (Высота)
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php the_field('product_sizeGross_height');?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                    <?php if(get_field('product_weightGross')){?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Вес в упаковке
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php the_field('product_weightGross');?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+                                    <?php if(get_field('product_warranty')){?>
+                                        <div class="product-detail__info-block__table__body__row">
+                                            <div class="product-detail__info-block__table__body__row__left">
+                                                Гарантия
+                                            </div>
+                                            <div class="product-detail__info-block__table__body__row__right">
+                                                <?php the_field('product_warranty');?>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <?php if (get_field('api_product')){ //Обычный товар?>
                             <div class="product-detail__info-block__table__wrap">
                                 <div class="product-detail__info-block__table product-detail__info-block__table--blue">
                                     <div class="product-detail__info-block__table__head">
@@ -288,8 +608,7 @@ if(get_field('production_price_currency') == 'package'){
 
                                             <div class="product-detail__info-block__table__head__right__inAccess">
 
-                                                <?php if (!get_field('api_product')){
-                                                    //Обычный товар
+                                                <?php if (!get_field('api_product')){ //Обычный товар
 
 //                                                    $stock_status = $product->get_stock_status();
 //                                                    $stock_status_text = '';
@@ -399,8 +718,11 @@ if(get_field('production_price_currency') == 'package'){
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php } ?>
+                        <?php } ?>
+
+                        <!--                        --><?php //} ?>
+
+                    </div>
                     <div class="product-detail__info__btns">
                         <button type="button" class="btn product-detail__info__btns__item btn-buy" onclick="addToCart(<?php echo esc_attr( $product->get_id() ) ?>)">
                             В корзину
@@ -495,7 +817,7 @@ if(get_field('production_price_currency') == 'package'){
                     get_field('product_sizeGross_height') ||
                     get_field('product_weightGross') ||
                     get_field('product_warranty')){?>
-                    <div class="product-desc__faq__item js-faq-item-open">
+                    <div class="product-desc__faq__item">
                         <div class="product-desc__faq__item__head">
                             <div class="product-desc__faq__item__head__name">Характеристики</div>
                             <i class="icon icon-caret">
@@ -509,7 +831,7 @@ if(get_field('production_price_currency') == 'package'){
                                 </svg>
                             </i>
                         </div>
-                        <div class="product-desc__faq__item__content" style="display: block;">
+                        <div class="product-desc__faq__item__content">
 
                             <?php //Поля Продукция?>
 
@@ -821,6 +1143,213 @@ if(get_field('production_price_currency') == 'package'){
                         </div>
                     </div>
                 <?php } ?>
+
+
+
+
+
+
+                <?php /* ?>
+                    <?php if(get_field('product_spareParts')){?>
+                        <?php
+                            $product_ids = explode(',', get_field('product_spareParts'));
+                            $get_product_spareParts = false;
+                            foreach ($product_ids as $sku) {
+                                if(wc_get_product_id_by_sku($sku)){
+                                    $get_product_spareParts = true;
+                                }
+                            }
+                        ?>
+                        <?php if ($get_product_spareParts){?>
+                    <div class="product-desc__faq__item">
+                        <div class="product-desc__faq__item__head">
+                            <div class="product-desc__faq__item__head__name">Запасные части</div>
+                            <i class="icon icon-caret">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34"
+                                     fill="none">
+                                    <rect class="icon-caret__circle" y="34" width="33.9995" height="33.9995"
+                                          rx="16.9998" transform="rotate(-90 0 34)" fill="#DBC3B7"/>
+                                    <path class="icon-caret__arrow" fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M14.5799 23.6235C14.1227 23.1933 14.0915 22.4637 14.5102 21.994L18.9571 17.0056L14.5104 12.0189C14.0916 11.5492 14.1226 10.8197 14.5798 10.3894C15.0369 9.95916 15.747 9.99108 16.1658 10.4607L21.3072 16.2264C21.7002 16.6672 21.7003 17.3435 21.3073 17.7844L16.1659 23.5519C15.7472 24.0216 15.0371 24.0537 14.5799 23.6235Z"
+                                          fill="white"/>
+                                </svg>
+                            </i>
+                        </div>
+                        <div class="product-desc__faq__item__content">
+                            <div class="product-card--little-list">
+                            <?php
+//                            $product_ids = explode(',', get_field('product_spareParts'));
+
+                            foreach ($product_ids as $sku) {
+                                $product_id = wc_get_product_id_by_sku($sku);
+                                $product = wc_get_product($product_id);
+
+                                if ($product) {
+                                    $thumbnail = get_the_post_thumbnail_url($product->get_id(),'full');
+                                    $title = $product->get_name();
+
+                                    $regular_price = $product->get_regular_price();
+                                    $formatted_price = (float)$regular_price;
+                                    $formatted_price = (int)round($formatted_price);
+                                    $formatted_price = number_format($formatted_price, 0, '.', ' ');
+
+                                    $full_name = get_field('product_fullName', $product->get_id());
+
+                                    echo '<a class="product-card--little-item" href="' . get_permalink($product->get_id()) . '">';
+                                    echo '<div class="img-wrap">';
+                                        if($thumbnail){
+                                            echo '<img src="' . $thumbnail . '">';
+                                        }
+                                    echo '</div>';
+                                    echo '<div class="title">' . $title . '</div>';
+                                    echo '<div class="price">' . $formatted_price . ' '.$currency_value.'</div>';
+//                                    echo '<div class="description">' . $full_name . '</div>';
+                                    echo '</a>';
+                                }
+                            }
+                            ?>
+
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <?php } ?>
+
+
+                    <?php if(get_field('product_accessories')){?>
+                        <?php
+                            $product_ids = explode(',', get_field('product_accessories'));
+                            $get_product_accessories = false;
+                            foreach ($product_ids as $sku) {
+                                if(wc_get_product_id_by_sku($sku)){
+                                    $get_product_accessories = true;
+                                }
+                            }
+                        ?>
+                        <?php if ($get_product_accessories){?>
+                    <div class="product-desc__faq__item">
+                        <div class="product-desc__faq__item__head">
+                            <div class="product-desc__faq__item__head__name">Аксессуары</div>
+                            <i class="icon icon-caret">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34"
+                                     fill="none">
+                                    <rect class="icon-caret__circle" y="34" width="33.9995" height="33.9995"
+                                          rx="16.9998" transform="rotate(-90 0 34)" fill="#DBC3B7"/>
+                                    <path class="icon-caret__arrow" fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M14.5799 23.6235C14.1227 23.1933 14.0915 22.4637 14.5102 21.994L18.9571 17.0056L14.5104 12.0189C14.0916 11.5492 14.1226 10.8197 14.5798 10.3894C15.0369 9.95916 15.747 9.99108 16.1658 10.4607L21.3072 16.2264C21.7002 16.6672 21.7003 17.3435 21.3073 17.7844L16.1659 23.5519C15.7472 24.0216 15.0371 24.0537 14.5799 23.6235Z"
+                                          fill="white"/>
+                                </svg>
+                            </i>
+                        </div>
+                        <div class="product-desc__faq__item__content">
+                            <div class="product-card--little-list">
+                            <?php
+                            $product_ids = explode(',', get_field('product_accessories'));
+
+                            foreach ($product_ids as $sku) {
+                                $product_id = wc_get_product_id_by_sku($sku);
+                                $product = wc_get_product($product_id);
+
+                                if ($product) {
+                                    $thumbnail = get_the_post_thumbnail_url($product->get_id(),'full');
+                                    $title = $product->get_name();
+
+                                    $regular_price = $product->get_regular_price();
+                                    $formatted_price = (float)$regular_price;
+                                    $formatted_price = (int)round($formatted_price);
+                                    $formatted_price = number_format($formatted_price, 0, '.', ' ');
+
+                                    $full_name = get_field('product_fullName', $product->get_id());
+
+                                    echo '<a class="product-card--little-item" href="' . get_permalink($product->get_id()) . '">';
+                                    echo '<div class="img-wrap">';
+                                        if($thumbnail){
+                                            echo '<img src="' . $thumbnail . '">';
+                                        }
+                                    echo '</div>';
+                                    echo '<div class="title">' . $title . '</div>';
+                                    echo '<div class="price">' . $formatted_price . ' '.$currency_value.'</div>';
+//                                    echo '<div class="description">' . $full_name . '</div>';
+                                    echo '</a>';
+                                }
+                            }
+                            ?>
+
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <?php } ?>
+
+                    <?php if(get_field('product_sparePartOfProducts')){?>
+                        <?php
+                            $product_ids = explode(',', get_field('product_sparePartOfProducts'));
+                            $get_product_sparePartOfProducts = false;
+                            foreach ($product_ids as $sku) {
+                                if(wc_get_product_id_by_sku($sku)){
+                                    $get_product_sparePartOfProducts = true;
+                                }
+                            }
+                        ?>
+                        <?php if ($get_product_sparePartOfProducts){?>
+                    <div class="product-desc__faq__item">
+                        <div class="product-desc__faq__item__head">
+                            <div class="product-desc__faq__item__head__name">Запасная часть</div>
+                            <i class="icon icon-caret">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34"
+                                     fill="none">
+                                    <rect class="icon-caret__circle" y="34" width="33.9995" height="33.9995"
+                                          rx="16.9998" transform="rotate(-90 0 34)" fill="#DBC3B7"/>
+                                    <path class="icon-caret__arrow" fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M14.5799 23.6235C14.1227 23.1933 14.0915 22.4637 14.5102 21.994L18.9571 17.0056L14.5104 12.0189C14.0916 11.5492 14.1226 10.8197 14.5798 10.3894C15.0369 9.95916 15.747 9.99108 16.1658 10.4607L21.3072 16.2264C21.7002 16.6672 21.7003 17.3435 21.3073 17.7844L16.1659 23.5519C15.7472 24.0216 15.0371 24.0537 14.5799 23.6235Z"
+                                          fill="white"/>
+                                </svg>
+                            </i>
+                        </div>
+                        <div class="product-desc__faq__item__content">
+                            <div class="product-card--little-list">
+                            <?php
+                            $product_ids = explode(',', get_field('product_sparePartOfProducts'));
+
+                            foreach ($product_ids as $sku) {
+                                $product_id = wc_get_product_id_by_sku($sku);
+                                $product = wc_get_product($product_id);
+
+                                if ($product) {
+                                    $thumbnail = get_the_post_thumbnail_url($product->get_id(),'full');
+                                    $title = $product->get_name();
+
+                                    $regular_price = $product->get_regular_price();
+                                    $formatted_price = (float)$regular_price;
+                                    $formatted_price = (int)round($formatted_price);
+                                    $formatted_price = number_format($formatted_price, 0, '.', ' ');
+
+                                    $full_name = get_field('product_fullName', $product->get_id());
+
+                                    echo '<a class="product-card--little-item" href="' . get_permalink($product->get_id()) . '">';
+
+                                    echo '<div class="img-wrap">';
+                                    if($thumbnail){
+                                        echo '<img src="' . $thumbnail . '">';
+                                    }
+                                    echo '</div>';
+
+                                    echo '<div class="title">' . $title . '</div>';
+                                    echo '<div class="price">' . $formatted_price . ' '.$currency_value.'</div>';
+//                                    echo '<div class="description">' . $full_name . '</div>';
+                                    echo '</a>';
+                                }
+                            }
+                            ?>
+
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <?php } ?>
+
+                       <?php */?>
+
 
                 <?php // echo do_shortcode('[custom_download url="https://portal.holdingbio.ru/api/img/file/d201d2d0-ea80-11ed-b78f-a71b31222ae6.pdf" filename="my_file.pdf"]');?>
 
