@@ -284,20 +284,20 @@ jQuery(document).ready(function($) {
 
         $('.contact-form__hidden--text-info').val(leasing_text);
     });
-	
+
 	if($('div').is('.kp_manager')){
 		$('.kp_manager').show().insertAfter($('h1'));
 	}
-	
+
 	if($('body').is('.admin-bar.woocommerce-cart.logged-in')){
 		setTimeout(function(){
 			// $('<a class="kp_download" href="#">Скачать КП</a>').insertAfter($('.wc-block-cart__submit'));
 			$('<a class="kp_create" href="#">Создать КП</a>').insertAfter($('.wc-block-cart__submit'));
 		}, 2000);
-		
+
 		$('body').on('click', '.kp_download', function(e){
 			e.preventDefault();
-			
+
 			$.ajax({
 				type : 'POST',
 				url : "/wp-admin/admin-ajax.php",
@@ -657,7 +657,47 @@ jQuery(document).ready(function ($) {
         '<path fill-rule="evenodd" clip-rule="evenodd" d="M27.4367 23.025C28.0166 22.4539 28.0166 21.5279 27.4367 20.9568L20.8078 14.4283C20.2279 13.8572 19.2878 13.8572 18.7079 14.4283C18.128 14.9994 18.128 15.9254 18.7079 16.4965L24.2868 21.9909L18.7079 27.4853C18.128 28.0564 18.128 28.9824 18.7079 29.5535C19.2878 30.1246 20.2279 30.1246 20.8078 29.5535L27.4367 23.025Z" fill="white"/>\n' +
         '</svg>'],
     });
+    function initCarousel() {
+        const $sliders = $('.slider-main-info');
 
+        if (!$sliders.length) return; // Если нет слайдеров на странице, выходим
+
+        $sliders.each(function () {
+            const $slider = $(this);
+
+            if ($(window).width() < 1024) {
+                if (!$slider.hasClass('owl-loaded')) { // Проверяем, чтобы не инициализировать повторно
+
+                    $slider.owlCarousel({
+                        loop: true,
+                        items:1,
+                        // autoWidth: true,
+                        margin:5,
+                        center:true,
+                        nav:true,
+                        navText: ['<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" fill="none">\n' +
+                        '<rect width="44" height="44" rx="22" fill="#EB6025"/>\n' +
+                        '<path fill-rule="evenodd" clip-rule="evenodd" d="M16.5633 23.025C15.9834 22.4539 15.9834 21.5279 16.5633 20.9568L23.1922 14.4283C23.7721 13.8572 24.7122 13.8572 25.2921 14.4283C25.872 14.9994 25.872 15.9254 25.2921 16.4965L19.7132 21.9909L25.2921 27.4853C25.872 28.0564 25.872 28.9824 25.2921 29.5535C24.7122 30.1246 23.7721 30.1246 23.1922 29.5535L16.5633 23.025Z" fill="white"/>\n' +
+                        '</svg>', '<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" fill="none">\n' +
+                        '<rect width="44" height="44" rx="22" transform="matrix(-1 0 0 1 44 0)" fill="#EB6025"/>\n' +
+                        '<path fill-rule="evenodd" clip-rule="evenodd" d="M27.4367 23.025C28.0166 22.4539 28.0166 21.5279 27.4367 20.9568L20.8078 14.4283C20.2279 13.8572 19.2878 13.8572 18.7079 14.4283C18.128 14.9994 18.128 15.9254 18.7079 16.4965L24.2868 21.9909L18.7079 27.4853C18.128 28.0564 18.128 28.9824 18.7079 29.5535C19.2878 30.1246 20.2279 30.1246 20.8078 29.5535L27.4367 23.025Z" fill="white"/>\n' +
+                        '</svg>']
+                    });
+                }
+            } else {
+                if ($slider.hasClass('owl-loaded')) { // Удаляем только если был инициализирован
+                    $slider.trigger('destroy.owl.carousel').removeClass('owl-carousel owl-loaded');
+                    $slider.find('.owl-stage-outer').children().unwrap();
+                }
+            }
+        });
+    }
+
+// Запускаем при загрузке
+    $(document).ready(initCarousel);
+
+// Отслеживаем изменение ширины окна
+    $(window).resize(initCarousel);
 
     $('.slider-logos').owlCarousel({
         loop: true,

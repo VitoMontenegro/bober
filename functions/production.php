@@ -193,7 +193,6 @@ add_filter('template_include', function($template) {
                 }
                 if ($term->slug === 'arenda-rozhkovikh') {
 
-                    var_dump($term->slug);
                     return get_template_directory() . '/single-product_arenda.php';
                 }
             }
