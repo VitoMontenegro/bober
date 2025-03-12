@@ -1,23 +1,23 @@
 <?php	if($prods && count($prods)){
 			$total = $total_old = 0;
 		?>
-		<link rel="stylesheet" id="dashicons-css" href="https://bober.services/wp-content/themes/bober/css/kp-pdf.css" type="text/css" media="all">
-						
+		<link rel="stylesheet" id="dashicons-css" href="<?php echo get_site_url(); ?>/wp-content/themes/bober/css/kp-pdf.css" type="text/css" media="all">
+
 			<div class="pdf">
-			
+
 			<div class="phones_wrap">
 				<div class="pdf_logo">
-					<img src="https://bober.services/wp-content/themes/bober/images/header-logo.jpg">
+					<img src="<?php echo get_site_url(); ?>/wp-content/themes/bober/images/header-logo.jpg">
 				</div>
 				<div class="phone1">
-					<img class="phone1_img" src="https://bober.services/wp-content/themes/bober/images/phone.jpg">
+					<img class="phone1_img" src="<?php echo get_site_url(); ?>/wp-content/themes/bober/images/phone.jpg">
 					<p class="phone1_p"><b>8 800 250 52 70</b><br>
 					Бесплатно по России</p>
 				</div>
 
                 <?php if($manager=get_field('kp_manager', $kp_id)){ ?>
                     <div class="phone2">
-                        <img class="phone2_img" src="https://bober.services/wp-content/themes/bober/images/time.jpg">
+                        <img class="phone2_img" src="<?php echo get_site_url(); ?>/wp-content/themes/bober/images/time.jpg">
                         <p class="phone2_p"><b><?=get_the_title($manager)?></b><br>
                             <b><?=get_field('manager_phone', $manager)?></b><br>
                             <?=get_field('manager_email', $manager)?></p>
@@ -26,7 +26,7 @@
                 <?php } else { ?>
 
                     <div class="phone2">
-                        <img class="phone2_img" src="https://bober.services/wp-content/themes/bober/images/time.jpg">
+                        <img class="phone2_img" src="<?php echo get_site_url(); ?>/wp-content/themes/bober/images/time.jpg">
                         <p class="phone2_p"><b>+7 911 928 22 42</b><br>
                             Круглосуточно</p>
                     </div>
@@ -44,7 +44,7 @@
 						$type = $item['type'];
 						$sale = $item['sale'];
 						$orig_price = $item['price'];
-						
+
 						$_product = wc_get_product($k);
 						$image = wp_get_attachment_image_src( get_post_thumbnail_id($k), 'thumbnail' );
 						$price = $_product->get_price();
@@ -58,7 +58,7 @@
 							<?php if(isset($image[0])): ?>
 								<img src="<?=$image[0]?>">
 							<?php else: ?>
-								<img src="https://bober.services/wp-content/uploads/woocommerce-placeholder-300x300.png">
+								<img src="<?php echo get_site_url(); ?>/wp-content/uploads/woocommerce-placeholder-300x300.png">
 							<?php endif ?>
 						</div>
 						<div class="prod__name">
@@ -68,8 +68,8 @@
 						</div>
 						<div class="prod__price">
 							<?php if($sale): ?>
-								<?php 
-									$total += $sale_price*$count; 
+								<?php
+									$total += $sale_price*$count;
 									$total_old += $price*$count;
 								?>
 								<div class="old_price"><?=number_format($price, 0, '.', ' ')?> ₽ x <?=$count?></div>
@@ -78,8 +78,8 @@
 								</div>
 								<p class="total_price"><?=number_format(($sale_price*$count), 0, '.', ' ')?> ₽</p>
 							<?php else: ?>
-								<?php 
-									$total += $price*$count; 
+								<?php
+									$total += $price*$count;
 									$total_old += $price*$count;
 								?>
 								<div class="prod__price_num">
@@ -99,9 +99,9 @@
                 </div>
 
 			<div class="link_kp">
-				<a href="https://bober.services/kp/<?=$kp_id?>">Посмотреть КП на сайте</a>
+				<a href="<?php echo get_site_url(); ?>/kp/<?=$kp_id?>">Посмотреть КП на сайте</a>
 			</div>
-			
+
 			<div class="kp_ach">
 				<div class="kp_ach__item">
 					<img src="/wp-content/themes/bober/ico/v1.svg">
@@ -116,7 +116,7 @@
 					<span>Техническая поддержка 24 / 7</span>
 				</div>
 			</div>
-			
+
 			<?php if($manager=get_field('kp_manager', $kp_id)): ?>
 				<div class="kp_manager">
 					<div class="kp_manager__left">
@@ -129,13 +129,13 @@
 					</div>
 				</div>
 			<?php endif ?>
-			
+
 			</div>
 		<?php
 		}
 		?>
-		
-<script type="text/javascript" src="https://bober.services/wp-content/themes/bober/js/jquery.min.js" id="jquery-js"></script>
+
+<script type="text/javascript" src="<?php echo get_site_url(); ?>/wp-content/themes/bober/js/jquery.min.js" id="jquery-js"></script>
 <script>
 	$(document).ready(function(){
 		var totalh = 0,
@@ -151,9 +151,9 @@
 		$('.pdf>*').each(function(i){
 			let h = $(this).outerHeight(true),
 				next_h = $(this).next().outerHeight(true);
-			
+
 			totalh += h;
-			
+
 			console.log(totalh);
 			if(totalh<=page_h){
 				$(this).appendTo(page1);
@@ -170,7 +170,7 @@
 		$('.pdf').append(page1);
 		$('.pdf').append(page2);
 		$('.pdf').append(page3);
-		
+
 		if(page3.find('*').length == 0){
 			page3.remove();
 			page2.css('marginBottom', 0);

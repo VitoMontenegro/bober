@@ -16,7 +16,7 @@
  */
 
 
-//ОТКЛЮЧЕНО ОПОВЕЩЕНИЕ ПО EMAIL - https://bober.services/wp-admin/admin.php?page=wc-settings&tab=email&section=wc_email_customer_new_account
+//ОТКЛЮЧЕНО ОПОВЕЩЕНИЕ ПО EMAIL - h/wp-admin/admin.php?page=wc-settings&tab=email&section=wc_email_customer_new_account
 defined( 'ABSPATH' ) || exit;
 
 do_action( 'woocommerce_email_header', $email_heading, $email ); ?>

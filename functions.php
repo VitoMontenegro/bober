@@ -401,7 +401,7 @@ function add_custom_menu_item() {
 }
 function custom_users_list_page() {
     // Перенаправляем на нужную страницу
-    wp_redirect('https://bober.services/users-list/');
+    wp_redirect(get_site_url() . '/users-list/');
     exit;
 }
 add_action('admin_menu', 'add_custom_menu_item');
@@ -873,7 +873,7 @@ function send_user_email() {
         wp_set_password($new_password, $user_id);
 
         // Отправляем письмо
-        $message = "Ваши данные для входа в личный кабинет <a href='https://bober.services/my-account/' target='_blank'>https://bober.services/my-account/</a><br>";
+        $message = "Ваши данные для входа в личный кабинет <a href='" . get_site_url() . "/my-account/' target='_blank'>" . get_site_url() . "/my-account/</a><br>";
         $message .= "Ваша почта: $user_email<br>Ваш пароль: $new_password";
 
         $headers = array(
@@ -973,7 +973,7 @@ function custom_user_registration_email($user_id) {
     $message .= "Почта: " . $user_email . "<br>";
 //    $message .= "Телефон: " . $billing_phone . "\n";
 //    $message .= "Компания: " . $user_company . "\n";
-    $message .= "Посмотреть: https://bober.services/users-list/";
+    $message .= "Посмотреть:" . get_site_url() . "/users-list/";
 
     // Отправляем письмо
     wp_mail('info@bober-service.ru, testdev@kometatek.ru', '«Бобёр-сервис». Новый пользователь', $message, $headers);

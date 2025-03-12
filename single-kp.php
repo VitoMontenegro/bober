@@ -191,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
 
             <?php if (!is_user_logged_in()): ?>
             <div class="kp-page__flex__right__auth">
-                <div class="kp-page__flex__right__auth__text kp_cart_note">Для того, чтобы приобрести товары со скидкой <a target="_blank" href="https://bober.services/my-account/">войдите или зарегистрируйтесь</a></div>
+                <div class="kp-page__flex__right__auth__text kp_cart_note">Для того, чтобы приобрести товары со скидкой <a target="_blank" href="<?php echo get_site_url(); ?>/my-account/">войдите или зарегистрируйтесь</a></div>
             </div>
             <?php else: ?>
             <div class="kp-page__flex__right__checkout">

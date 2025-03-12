@@ -134,8 +134,8 @@ function send_kp(){
 
     $html = '
 		<p>Коммерческое предолжение от компании Бобёр-сервис:</p>
-		<p><a target="_blank" href="https://bober.services/kp/'.$_POST['id'].'">Помотреть на сайте</a></p>
-		<p><a target="_blank" href="https://bober.services/wp-content/kp_pdf/kp_'.$_POST['id'].'.pdf">Скачать в формате PDF</a></p>
+		<p><a target="_blank" href="' . get_site_url() . '/kp/'.$_POST['id'].'">Помотреть на сайте</a></p>
+		<p><a target="_blank" href="' . get_site_url() . '/wp-content/kp_pdf/kp_'.$_POST['id'].'.pdf">Скачать в формате PDF</a></p>
 	';
 
     $headers = array(
@@ -208,14 +208,14 @@ function create_pdf_kp_pure(){
 
     $pdf_dir = get_home_path().'/wp-content/kp_pdf/kp_'.$hash.'.pdf';
     if(file_exists($pdf_dir)){
-        echo 'https://bober.services/wp-content/kp_pdf/kp_'.$hash.'.pdf'; die();
+        echo get_site_url() . '/wp-content/kp_pdf/kp_'.$hash.'.pdf'; die();
     }
 
     $apikey = 'd026901c70b8206fae196429fc0e2e49';
     $postdata = http_build_query(
         array(
             'apikey' => $apikey,
-            'value' => 'https://bober.services/kp_pdf/?kp='.$hash,
+            'value' => get_site_url() . '/kp_pdf/?kp='.$hash,
             'MarginBottom' => '0',
             'MarginTop' => '0',
             'MarginLeft' => '0',
@@ -234,7 +234,7 @@ function create_pdf_kp_pure(){
     $result = file_get_contents('http://api.pdf4b.ru/pdf', false, $context);
     file_put_contents($pdf_dir, $result);
 
-    echo 'https://bober.services/wp-content/kp_pdf/kp_'.$hash.'.pdf';
+    echo get_site_url() . '/wp-content/kp_pdf/kp_'.$hash.'.pdf';
     die();
 }
 
@@ -246,7 +246,7 @@ function create_pdf_kp($id=0){
 
     if(get_post_type($id)!='kp') return;
 
-    file_get_contents('https://bober.services/kp_pdf/?kp_post='.$id);
+    file_get_contents(get_site_url() . '/kp_pdf/?kp_post='.$id);
     if($http_response_header[0]!='HTTP/1.1 200 OK') return;
 
     $pdf_dir = get_home_path().'/wp-content/kp_pdf/kp_'.$id.'.pdf';
@@ -255,7 +255,7 @@ function create_pdf_kp($id=0){
     $postdata = http_build_query(
         array(
             'apikey' => $apikey,
-            'value' => 'https://bober.services/kp_pdf/?kp_post='.$id,
+            'value' => get_site_url() . '/kp_pdf/?kp_post='.$id,
             'MarginBottom' => '0',
             'MarginTop' => '0',
             'MarginLeft' => '0',
@@ -309,7 +309,7 @@ function kp_metabox_callback( $post ) {
             <a target="_blank" href="/kp/<?=$post->ID?>" class="">Перейти на КП</a>
             <a href="#" data-kp="<?=$post->ID?>" class="kp_copy">Копировать ссылку на КП</a>
             <a target="_blank" href="/wp-content/kp_pdf/kp_<?=$post->ID?>.pdf?<?=time()?>" class="kp_pdf">Скачать КП в PDF</a>
-            <a target="_blank" href="https://wa.me/?text=Коммерческое+предложение+от+компании+bober.service.+Ссылка:https://bober.services/kp/<?=$post->ID?>" class="kp_wa">Отправить в WhatsApp</a>
+            <a target="_blank" href="https://wa.me/?text=Коммерческое+предложение+от+компании+bober.service.+Ссылка:<?php echo get_site_url(); ?>/kp/<?=$post->ID?>" class="kp_wa">Отправить в WhatsApp</a>
         </div>
         <h5 style="margin: 20px 0 6px 0px;font-size: 12px;">Отправить КП на email</h5>
         <div class="submit_kp">
@@ -334,7 +334,7 @@ function kp_pdf(){
         $date = get_the_date('d.m.y', $kp_id);
         status_header(200);
 
-        require_once('template-parts/kp-pdf-post.php');
+        require_once get_stylesheet_directory() . '/template-parts/kp-pdf-post.php';
         die();
     }
 }
@@ -455,12 +455,24 @@ function get_product_details() {
     $product = wc_get_product($product_id);
 
     if ($product) {
-        $product_data = array(
-            'title' => $product->get_name(),
-            'image' => wp_get_attachment_image_src($product->get_image_id(), 'medium')[0],
-            'price' => $product->get_price(),
-            'link' => get_permalink($product_id),
-        );
+        if($product->get_image_id()) {
+            $product_data = array(
+                'title' => $product->get_name(),
+                'image' => wp_get_attachment_image_src($product->get_image_id(), 'medium')[0],
+                'price' => $product->get_price(),
+                'link' => get_permalink($product_id),
+            );
+
+        } else {
+            $product_data = array(
+                'title' => $product->get_name(),
+                'image' => '/wp-content/uploads/woocommerce-placeholder-300x300.png',
+                'price' => $product->get_price(),
+                'link' => get_permalink($product_id),
+            );
+
+        }
+
 
         wp_send_json_success($product_data);
     } else {
