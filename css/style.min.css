@@ -5972,6 +5972,10 @@ input[type=number] {
     display: flex;
     gap: 50px;
 }
+.term-arenda-kofemashin
+.main-banner__wrap {
+    gap: 30px;
+}
 .main-banner__title {
     max-width: 700px;
     font-family: "AmaticSC", Arial, sans-serif;
