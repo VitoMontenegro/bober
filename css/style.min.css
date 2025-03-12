@@ -13211,11 +13211,15 @@ div.iframe-full-video__text-bottom {
     padding: 25px;
     flex-shrink: 10;
 }
-.info-block-8__right__background {
+.info-block-8__right__background,
+.woocommerce .info-block-8__right__background, .woocommerce-page .info-block-8__right__background {
     position: absolute;
-    right: -45px;
-    top: -77%;
     pointer-events: none;
+    left: -190px;
+    top: -110px;
+    width: 770px;
+    height: 770px;
+    max-width: unset;
 }
 .info-block-8__bottom {
     background: linear-gradient(180deg, rgb(243, 152, 26) 0%, rgb(248, 133, 15) 50%, rgb(243, 152, 26) 100%);
