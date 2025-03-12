@@ -1138,3 +1138,126 @@ function get_arenda_price() {
         return '';
     }
 }
+
+//группировка товаров в корзине по категориям
+add_action('wp_footer', function() {
+    if (!is_cart()) return;
+
+    $cart = WC()->cart->get_cart();
+    $debug_data = [];
+
+    foreach ($cart as $cart_item) {
+        $product = $cart_item['data'];
+        $terms = get_the_terms($product->get_id(), 'product_cat');
+        $debug_data[$product->get_name()] = $terms ? wp_list_pluck($terms, 'name') : 'Категория не найдена';
+    }
+
+    echo "<script>console.log('🛠️ DEBUG: Категории товаров в PHP:', " . json_encode($debug_data, JSON_UNESCAPED_UNICODE) . ");</script>";
+});
+
+
+add_action('wp_footer', function() {
+    if (!is_cart()) return;
+
+    $cart = WC()->cart->get_cart();
+    $categories_data = [];
+
+    foreach ($cart as $cart_item) {
+        $product = $cart_item['data'];
+        $terms = get_the_terms($product->get_id(), 'product_cat');
+        $parent_category = 'Без категории';
+
+        if ($terms && !is_wp_error($terms)) {
+            foreach ($terms as $term) {
+                if ($term->parent == 0) {
+                    $parent_category = $term->name; // Родительская категория
+                    break;
+                } else {
+                    // Если категория не родительская, ищем её родителя
+                    $parent = get_term($term->parent, 'product_cat');
+                    if ($parent && !is_wp_error($parent)) {
+                        $parent_category = $parent->name;
+                        break;
+                    }
+                }
+            }
+        }
+
+        $categories_data[$product->get_name()] = $parent_category;
+    }
+
+    $json_categories = json_encode($categories_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    ?>
+    <div id="cart-product-categories" style="display: none;" data-categories='<?php echo $json_categories; ?>'></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("🔥 WooCommerce блоковая корзина загружена!");
+
+            function groupCartItems() {
+                let cartTable = document.querySelector('.wc-block-cart-items');
+                let cartTableBody = document.querySelector('.wc-block-cart-items tbody');
+                let cartHeaderRow = document.querySelector('.wc-block-cart-items__header');
+
+                if (!cartTable || !cartTableBody || !cartHeaderRow) {
+                    console.error("❌ Ошибка: таблица корзины не найдена!");
+                    return;
+                }
+
+                let columnCount = cartHeaderRow.querySelectorAll('th').length; // Определяем количество колонок
+
+                let cartRows = document.querySelectorAll('.wc-block-cart-items__row');
+                let categoriesData = document.getElementById('cart-product-categories');
+                if (!categoriesData) {
+                    console.error("❌ Ошибка: данные категорий не найдены!");
+                    return;
+                }
+
+                let categories = JSON.parse(categoriesData.getAttribute('data-categories'));
+                let grouped = {};
+
+                cartRows.forEach(row => {
+                    let productLink = row.querySelector('.wc-block-components-product-name');
+                    if (!productLink) return;
+
+                    let productName = productLink.textContent.trim();
+                    let category = categories[productName] || "Без категории";
+
+                    if (!grouped[category]) {
+                        grouped[category] = [];
+                    }
+                    grouped[category].push(row);
+                });
+
+                // Очищаем tbody, но оставляем структуру таблицы
+                cartTableBody.innerHTML = "";
+
+                for (let category in grouped) {
+                    let categoryRow = document.createElement("tr");
+                    categoryRow.className = "wc-block-cart-items__row";
+                    categoryRow.innerHTML = `<td colspan="${columnCount}"><h2>${category}</h2></td>`;
+                    cartTableBody.appendChild(categoryRow);
+
+                    grouped[category].forEach(el => cartTableBody.appendChild(el));
+                }
+            }
+
+            setTimeout(groupCartItems, 500);
+        });
+    </script>
+    <style>
+        .cart-category-header td {
+            font-size: 22px;
+            font-weight: bold;
+            border-bottom: 2px solid #ddd;
+            padding: 10px 0;
+            margin-top: 20px;
+            text-align: left;
+        }
+    </style>
+    <?php
+});
+
+
+
+

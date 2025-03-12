@@ -15627,3 +15627,16 @@ div.iframe-full-video__text-bottom {
     text-decoration: underline;
     color: #262626;
 }
+
+.cart-category-header {
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+    display: block;
+}
+
+.grouped-cart-items {
+    margin-top: 10px;
+}
