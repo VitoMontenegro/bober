@@ -292,7 +292,7 @@ jQuery(document).ready(function($) {
 	if($('body').is('.admin-bar.woocommerce-cart.logged-in')){
 		setTimeout(function(){
 			// $('<a class="kp_download" href="#">Скачать КП</a>').insertAfter($('.wc-block-cart__submit'));
-			$('<a class="kp_create" href="#">Создать КП</a>').insertAfter($('.wc-block-cart__submit'));
+			$('<a class="kp_create" href="#">Создать коммерческое предложение</a>').insertAfter($('.wc-block-cart__submit'));
 		}, 2000);
 
 		$('body').on('click', '.kp_download', function(e){

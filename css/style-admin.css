@@ -1045,7 +1045,7 @@ td.date.column-date {
     flex-wrap: wrap;
 }
 .kp_main_acf-result-price .acf-input {
-    text-align: center;
+    text-align: left;
     font-weight: 800;
     font-size: 22px;
 }

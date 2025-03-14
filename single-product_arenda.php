@@ -3,7 +3,9 @@
  * sigle-product (sigle-product_arenda.php)
  * @package WordPress
  */
-global $product;
+
+$product_id = get_the_ID();
+$product = wc_get_product($product_id);
 ?>
 <?php get_header(); ?>
 

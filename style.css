@@ -4081,6 +4081,16 @@ body:not(.logged-in).kp-page .wc-block-cart__submit{
     background-color: #EB6025;
     color: #fff;
 }
+@media (max-width: 560px){
+    .kp_create {
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: 15px;
+    }
+}
 
 .catalog__filter__item--sort .catalog__filter__item__list {
     row-gap: 0px;

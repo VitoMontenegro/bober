@@ -1,7 +1,7 @@
 <?php
 
 if ( ! defined( '_S_VERSION' ) ) {
-    define('_S_VERSION', '0.0+228');
+    define('_S_VERSION', '0.0+230');
 }
 $GLOBALS['youtube_id'] = 0; //Глобавльная переменная для id youtube видео
 $GLOBALS['page-template'] = ''; //Текущий шаблон (если нужен)
@@ -1139,21 +1139,6 @@ function get_arenda_price() {
     }
 }
 
-//группировка товаров в корзине по категориям
-add_action('wp_footer', function() {
-    if (!is_cart()) return;
-
-    $cart = WC()->cart->get_cart();
-    $debug_data = [];
-
-    foreach ($cart as $cart_item) {
-        $product = $cart_item['data'];
-        $terms = get_the_terms($product->get_id(), 'product_cat');
-        $debug_data[$product->get_name()] = $terms ? wp_list_pluck($terms, 'name') : 'Категория не найдена';
-    }
-
-    echo "<script>console.log('🛠️ DEBUG: Категории товаров в PHP:', " . json_encode($debug_data, JSON_UNESCAPED_UNICODE) . ");</script>";
-});
 
 
 add_action('wp_footer', function() {
@@ -1169,17 +1154,14 @@ add_action('wp_footer', function() {
 
         if ($terms && !is_wp_error($terms)) {
             foreach ($terms as $term) {
-                if ($term->parent == 0) {
-                    $parent_category = $term->name; // Родительская категория
-                    break;
-                } else {
-                    // Если категория не родительская, ищем её родителя
-                    $parent = get_term($term->parent, 'product_cat');
-                    if ($parent && !is_wp_error($parent)) {
-                        $parent_category = $parent->name;
-                        break;
-                    }
+                // Поднимаемся вверх, пока не найдём самую верхнюю родительскую категорию
+                while ($term->parent != 0) {
+                    $term = get_term($term->parent, 'product_cat');
+                    if (!$term || is_wp_error($term)) break;
                 }
+                // Теперь $term содержит корневую категорию
+                $parent_category = $term->name;
+                break; // Достаточно первой найденной корневой категории
             }
         }
 
@@ -1198,6 +1180,9 @@ add_action('wp_footer', function() {
                 let cartTable = document.querySelector('.wc-block-cart-items');
                 let cartTableBody = document.querySelector('.wc-block-cart-items tbody');
                 let cartHeaderRow = document.querySelector('.wc-block-cart-items__header');
+                if (cartHeaderRow) {
+                    cartHeaderRow.style.display = 'none';
+                }
 
                 if (!cartTable || !cartTableBody || !cartHeaderRow) {
                     console.error("❌ Ошибка: таблица корзины не найдена!");
@@ -1235,7 +1220,7 @@ add_action('wp_footer', function() {
                 for (let category in grouped) {
                     let categoryRow = document.createElement("tr");
                     categoryRow.className = "wc-block-cart-items__row";
-                    categoryRow.innerHTML = `<td colspan="${columnCount}"><h2>${category}</h2></td>`;
+                    categoryRow.innerHTML = `<td colspan="${columnCount}" style="padding: 10px 4px 10px 16px;font-weight: bold;font-size: 23px;"><div>${category}</div></td>`;
                     cartTableBody.appendChild(categoryRow);
 
                     grouped[category].forEach(el => cartTableBody.appendChild(el));
