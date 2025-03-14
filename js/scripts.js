@@ -961,8 +961,8 @@ jQuery(document).ready(function ($) {
     //faq - product
 
     faq_prod_Toggles = $('.product-desc__faq__item__head');
-    $('.product-desc__faq__item:first-child').toggleClass('js-faq-item-open'); //Первый item открыт
-    $('.product-desc__faq__item:first-child').find('.product-desc__faq__item__content').slideToggle(200); //Первый item открыт
+    //$('.product-desc__faq__item:first-child').toggleClass('js-faq-item-open'); //Первый item открыт
+    //$('.product-desc__faq__item:first-child').find('.product-desc__faq__item__content').slideToggle(200); //Первый item открыт
     faq_prod_Toggles.click(function () {
         $(this).parents('.product-desc__faq__item').toggleClass('js-faq-item-open');
         $(this).parents('.product-desc__faq__item').find('.product-desc__faq__item__content').slideToggle(200);

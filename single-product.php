@@ -37,8 +37,8 @@ function render_field_values($field_name, $field_settings) {
 <?php get_header(); ?>
 
 <?php
-global $product;
-
+$product_id = get_the_ID();
+$product = wc_get_product($product_id);
 //Галерея товара
 $attachment_ids = $product->get_gallery_image_ids();
 
@@ -478,6 +478,7 @@ if(get_field('production_price_currency') == 'package'){
                 <?php if(get_field('production_degree_roasting') ||
                     get_field('production_country') ||
                     have_rows('production_char_bottom') ||
+                    have_rows('production_char') ||
                     get_field('production_tea_weight') ||
                     get_field('production_tea_bagged') ||
                     get_field('production_tea_color') ||
@@ -528,6 +529,25 @@ if(get_field('production_price_currency') == 'package'){
                                         </div>
                                         <div class="product-desc__row__right">
                                             <?php the_sub_field('production_char_bottom_right');?>
+                                        </div>
+                                    </div>
+                                <?php endwhile; ?>
+                            <?php endif; ?>
+
+
+                            <?php if( have_rows('production_char') && !have_rows('production_char_bottom') ): ?>
+                                <?php while( have_rows('production_char') ): the_row(); ?>
+
+                                    <?php if($product->get_sku() && get_sub_field('production_char_bottom_right') == $product->get_sku()){
+                                        $product_get_article_char = true;
+                                    }?>
+
+                                    <div class="product-desc__row">
+                                        <div class="product-desc__row__left">
+                                            <?php the_sub_field('production_char_left');?></php>
+                                        </div>
+                                        <div class="product-desc__row__right">
+                                            <?php the_sub_field('production_char_right');?>
                                         </div>
                                     </div>
                                 <?php endwhile; ?>

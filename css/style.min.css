@@ -6479,9 +6479,11 @@ input[type=number] {
     border-radius: 24px;
     overflow: hidden;
     box-shadow: 0 0 60px 0 rgba(0, 0, 0, 0.06);
+    max-width: 431px;
+    height: 431px;
 }
 .product-detail__gallery-container {
-    height: 531px;
+    height: 431px;
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -6844,6 +6846,13 @@ input[type=number] {
     background-color: #EB6025;
 }
 
+@media (min-width: 560px) {
+    .product-detail__info__btns button.product-detail__info__btns__item,
+    .product-detail__info__btns a.product-detail__info__btns__item {
+        max-width: 327px;
+    }
+
+}
 @media (max-width: 1200px) {
     .product-detail__info__title {
         font-size: 24px;
