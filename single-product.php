@@ -452,7 +452,7 @@ if(get_field('production_price_currency') == 'package'){
             <div id="product-desc__faq" class="product-desc__faq">
 
                 <?php if(get_the_content()){ //Вывод описания?>
-                    <div class="product-desc__faq__item">
+                    <div class="product-desc__faq__item js-faq-item-open">
                         <div class="product-desc__faq__item__head">
                             <div class="product-desc__faq__item__head__name">
                                 Описание
@@ -468,7 +468,7 @@ if(get_field('production_price_currency') == 'package'){
                                 </svg>
                             </i>
                         </div>
-                        <div class="product-desc__faq__item__content">
+                        <div class="product-desc__faq__item__content" style="display: block;">
                             <?php the_content();?>
                         </div>
                     </div>
@@ -909,7 +909,7 @@ if(get_field('production_price_currency') == 'package'){
             ?>
 
 
-            <?php if($calc_leasing){?>
+            <?php /* if($calc_leasing){?>
                 <div class="section calc-leasing__section product-detail__calc">
                     <div class="container">
                         <h2 class="section-title">Калькулятор лизинга</h2>
@@ -1025,7 +1025,7 @@ if(get_field('production_price_currency') == 'package'){
                         </div>
                     </div>
                 </div>
-            <?php } ?>
+            <?php } */ ?>
 
     </section>
 

@@ -5988,7 +5988,7 @@ input[type=number] {
 }
 .main-banner__text {
     font-weight: 700;
-    font-size: 22px;
+    font-size: 20px;
     line-height: 125%;
     color: #323030;
 }
@@ -6938,6 +6938,10 @@ input[type=number] {
     }
 }
 @media (max-width: 560px) {
+    .product-detail__gallery {
+        height: auto;
+    }
+
     .product-detail__info-block__table__head__left .is-desktop {
         display: none;
     }
@@ -15693,4 +15697,17 @@ div.iframe-full-video__text-bottom {
 
 .grouped-cart-items {
     margin-top: 10px;
+}
+.hidden {
+    display: none;
+}
+.custom_showroom {
+    width: 100%;
+    height: 500px;
+}
+
+@media (max-width: 560px) {
+    .custom_showroom {
+        height: 250px;
+    }
 }

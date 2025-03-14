@@ -487,9 +487,9 @@ Theme Name: bober
     max-width: 250px;
     width: 100%;
 }
-.product-desc__row__right {
+/*.product-desc__row__right {
     font-weight: 800;
-}
+}*/
 .product-desc__faq__item__content > .product-desc__row:first-child {
     margin-top: 3px;
 }
@@ -504,7 +504,7 @@ Theme Name: bober
         width: auto;
     }
     .product-desc__row__right {
-        text-align: right;
+       /* text-align: right;*/
     }
 }
 
@@ -802,7 +802,7 @@ Theme Name: bober
 }
 
 .product-detail__info {
-    min-height: 531px;
+    /*min-height: 531px;*/
     display: flex;
     flex-direction: column;
 }
@@ -4067,14 +4067,26 @@ body:not(.logged-in).kp-page .wc-block-cart__submit{
 .kp_create {
     font-size: 14px;
     margin-right: 20px;
-    padding: 6px 16px;
+    padding: 6px 16px 6px 40px;
     display: inline-block;
     text-decoration: none;
-    border-radius: 6px;
+    border-radius: 8px;
     color: #000;
     position: relative;
-    border: 1px solid #ef5541;
+    border: 2px solid #ef5541;
     transition: 0.15s;
+}
+.kp_create::after {
+    content: '';
+    width: 26px;
+    height: 25px;
+    background: url(/wp-content/themes/bober/ico/pdf.png);
+    display: inline-block;
+    background-size: contain;
+    margin: 0px 0 0 0;
+    position: absolute;
+    top: 6px;
+    left: 6px;
 }
 
 .kp_create:hover {

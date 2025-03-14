@@ -507,7 +507,7 @@ $product = wc_get_product($product_id);
             </div>
         </section>
 
-
+        <?php /*
         <section class="section calc-leasing__section product-detail__calc">
             <div class="container">
                 <h2 class="section-title">Калькулятор лизинга</h2>
@@ -589,7 +589,7 @@ $product = wc_get_product($product_id);
             </div>
         </section>
 
-
+        */ ?>
 
         <section class="section product-desc__section">
             <div class="container">

@@ -134,8 +134,9 @@ function send_kp(){
 
     $html = '
 		<p>Коммерческое предолжение от компании Бобёр-сервис:</p>
-		<p><a target="_blank" href="' . get_site_url() . '/kp/'.$_POST['id'].'">Помотреть на сайте</a></p>
-		<p><a target="_blank" href="' . get_site_url() . '/wp-content/kp_pdf/kp_'.$_POST['id'].'.pdf">Скачать в формате PDF</a></p>
+		<p><a target="_blank" href="' . get_site_url() . '/kp/'.$_POST['id'].'">Помотреть на сайте</a> ';
+		 /*<p><a target="_blank" href="' . get_site_url() . '/wp-content/kp_pdf/kp_'.$_POST['id'].'.pdf">Скачать в формате PDF</a></p> */
+    $html .='	<p><a target="_blank" href="' . get_site_url() . '/wp-content/kp_pdf/download.php?id='.$_POST['id'].'">Скачать в формате PDF</a></p>
 	';
 
     $headers = array(
@@ -308,7 +309,10 @@ function kp_metabox_callback( $post ) {
         <div class="kp">
             <a target="_blank" href="/kp/<?=$post->ID?>" class="">Перейти на КП</a>
             <a href="#" data-kp="<?=$post->ID?>" class="kp_copy">Копировать ссылку на КП</a>
-            <a target="_blank" href="/wp-content/kp_pdf/kp_<?=$post->ID?>.pdf?<?=time()?>" class="kp_pdf">Скачать КП в PDF</a>
+            <?php /* <a target="_blank" href="/wp-content/kp_pdf/kp_<?=$post->ID?>.pdf?<?=time()?>" class="kp_pdf">Скачать КП в PDF</a> */ ?>
+
+            <a target="_blank" href="/wp-content/kp_pdf/download.php?id=<?=$post->ID?>" class="kp_pdf">Скачать КП в PDF</a>
+
             <a target="_blank" href="https://wa.me/?text=Коммерческое+предложение+от+компании+bober.service.+Ссылка: <?php echo get_site_url(); ?>/kp/<?=$post->ID?>" class="kp_wa">Отправить в WhatsApp</a>
         </div>
         <h5 style="margin: 20px 0 6px 0px;font-size: 12px;">Отправить КП на email</h5>
