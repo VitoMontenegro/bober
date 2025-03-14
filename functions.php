@@ -1,7 +1,7 @@
 <?php
 
 if ( ! defined( '_S_VERSION' ) ) {
-    define('_S_VERSION', '0.0+230');
+    define('_S_VERSION', '0.0+231');
 }
 $GLOBALS['youtube_id'] = 0; //Глобавльная переменная для id youtube видео
 $GLOBALS['page-template'] = ''; //Текущий шаблон (если нужен)
@@ -206,6 +206,9 @@ include('functions/acf.php');
 
 // ===== Gutenberg =====
 include('functions/gutenberg.php');
+
+// ===== Search =====
+include('functions/search.php');
 
 // ===== Коммерческое предложение КП+PDF+оформление =====
 include('functions/kp.php');

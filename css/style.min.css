@@ -14267,6 +14267,33 @@ div.iframe-full-video__text-bottom {
     background-color: #EB6025;
     color: #fff;
 }
+.product-card__btns__revert {
+    border-radius: 8px;
+    background-color: #EB6025;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 100%;
+    color: #fff;
+    border: none;
+    height: 50px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 8px;
+    row-gap: 2px;
+    width: 100%;
+    padding: 5px 5px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.15s;
+    margin-top: 15px;
+}
+.flex-orange-col-3__item:hover .product-card__btns__revert {
+    background-color: #ffe4d9;
+    color: #EB6025;
+}
 .product-card__btns__whatsapp {
     flex-shrink: 0;
     border-radius: 8px;
@@ -14416,8 +14443,8 @@ div.iframe-full-video__text-bottom {
     .product-card__btns__main {
         font-size: 14px;
         height: 34px;
-        color: #fff;
-        background-color: #EB6025;
+        /*color: #fff;
+        background-color: #EB6025;*/
         border-radius: 6px;
     }
     .product-card__btns__whatsapp {
@@ -14482,8 +14509,8 @@ div.iframe-full-video__text-bottom {
     .product-card__btns__main {
         font-size: 14px;
         height: 34px;
-        color: #fff;
-        background-color: #EB6025;
+       /* color: #fff;
+        background-color: #EB6025;*/
         border-radius: 6px;
     }
     .product-card__btns__whatsapp {
@@ -15014,6 +15041,10 @@ div.iframe-full-video__text-bottom {
     border-radius: 14px;
     animation: modal-scale 0.25s;
 }
+.modal-block.modal-block__cart-add {
+    max-width: 330px;
+    padding: 20px;
+}
 
 .modal-open {
     display: block;
@@ -15061,6 +15092,9 @@ div.iframe-full-video__text-bottom {
     text-align: center;
     margin: 0 0 20px;
 }
+.modal-block__cart-add .modal-block__title {
+    margin: 0 0 8px;
+}
 
 .modal-block__text {
     font-weight: 700;
@@ -15094,6 +15128,10 @@ div.iframe-full-video__text-bottom {
 }
 
 @media (max-width: 560px) {
+
+    .modal-block.modal-block__cart-add {
+        max-width: 280px;
+    }
     .modal-block {
         padding: 20px 16px;
         max-width: 270px;
@@ -15648,6 +15686,9 @@ div.iframe-full-video__text-bottom {
     border-bottom: 2px solid #ddd;
     padding-bottom: 5px;
     display: block;
+}
+.text-decoration-none {
+    text-decoration: none;
 }
 
 .grouped-cart-items {
