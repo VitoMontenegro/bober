@@ -15711,3 +15711,21 @@ div.iframe-full-video__text-bottom {
         height: 250px;
     }
 }
+
+.tg_btn {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#fff;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 120%; /* 19.2px */
+    gap: 6px;
+    border-radius: 87px;
+    background: #007AFF;
+    backdrop-filter: blur(8px);
+    padding: 0 18px;
+    text-decoration: none;
+}
