@@ -36,7 +36,9 @@ $postponement_total = 0;
 $get_postponement = false;
 foreach ($woocommerce->cart->get_cart() as $cart_item) {
     $total_before_discounts += $cart_item['data']->get_regular_price() * $cart_item['quantity'];//Скидка
-    $postponement_total += get_field('postponement', $cart_item['product_id']) * $cart_item['quantity'];
+    $postponement_value = get_field('postponement', $cart_item['product_id']);
+    $postponement_value = floatval($postponement_value);
+    $postponement_total += $postponement_value * $cart_item['quantity'];
     if(get_field('postponement', $cart_item['product_id'])){
         $get_postponement = true;
     }
@@ -69,17 +71,17 @@ $GLOBALS['$get_postponement'] = $get_postponement;
 
             <div class="customer_details_checkbox">
                 <?php if($get_postponement){?>
-                <label class="customer_details_checkbox__item">
+                    <label class="customer_details_checkbox__item">
 
-                    <input type="checkbox" name="payment_checkbox[]" value="postponement" class="customer_details_checkbox__item__input customer_details_checkbox__item__input--postponement">
-                    <span class="customer_details_checkbox__item__input-decoration">
+                        <input type="checkbox" name="payment_checkbox[]" value="postponement" class="customer_details_checkbox__item__input customer_details_checkbox__item__input--postponement">
+                        <span class="customer_details_checkbox__item__input-decoration">
                         <svg class="customer_details_checkbox__item__input-decoration__check" width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M19.2975 6.78669C19.8309 7.30416 19.8333 8.14551 19.3029 8.66591L10.5966 17.2083C10.341 17.4591 9.99342 17.6001 9.63087 17.6001C9.26833 17.6001 8.92074 17.4591 8.6651 17.2083L5.69737 14.2964C5.16699 13.776 5.16942 12.9347 5.7028 12.4172C6.23618 11.8997 7.09853 11.9021 7.62891 12.4225L9.63087 14.3868L17.3714 6.79198C17.9018 6.27159 18.7641 6.26922 19.2975 6.78669Z" fill="white"></path>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M19.3029 8.66591C19.8333 8.14551 19.8309 7.30416 19.2975 6.78669C18.7641 6.26922 17.9018 6.27159 17.3714 6.79198L9.63087 14.3868L7.62891 12.4225C7.09853 11.9021 6.23618 11.8997 5.7028 12.4172C5.16942 12.9347 5.16699 13.776 5.69737 14.2964L8.6651 17.2083C8.92074 17.4591 9.26833 17.6001 9.63087 17.6001C9.99342 17.6001 10.341 17.4591 10.5966 17.2083L19.3029 8.66591Z" fill="white"></path>
                         </svg>
                     </span>
-                    <span class="customer_details_checkbox__item__text">Отсрочка 7 дней</span>
-                </label>
+                        <span class="customer_details_checkbox__item__text">Отсрочка 7 дней</span>
+                    </label>
                 <?php } ?>
                 <label class="customer_details_checkbox__item">
                     <input type="checkbox" name="payment_checkbox[]" value="cash-payment" class="customer_details_checkbox__item__input">
