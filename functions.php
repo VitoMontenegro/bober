@@ -1,7 +1,7 @@
 <?php
 
 if ( ! defined( '_S_VERSION' ) ) {
-    define('_S_VERSION', '0.0+224');
+    define('_S_VERSION', '0.0+231');
 }
 $GLOBALS['youtube_id'] = 0; //Глобавльная переменная для id youtube видео
 $GLOBALS['page-template'] = ''; //Текущий шаблон (если нужен)
@@ -207,6 +207,9 @@ include('functions/acf.php');
 // ===== Gutenberg =====
 include('functions/gutenberg.php');
 
+// ===== Search =====
+include('functions/search.php');
+
 // ===== Коммерческое предложение КП+PDF+оформление =====
 include('functions/kp.php');
 
@@ -401,7 +404,7 @@ function add_custom_menu_item() {
 }
 function custom_users_list_page() {
     // Перенаправляем на нужную страницу
-    wp_redirect('https://bober.services/users-list/');
+    wp_redirect(get_site_url() . '/users-list/');
     exit;
 }
 add_action('admin_menu', 'add_custom_menu_item');
@@ -873,7 +876,7 @@ function send_user_email() {
         wp_set_password($new_password, $user_id);
 
         // Отправляем письмо
-        $message = "Ваши данные для входа в личный кабинет <a href='https://bober.services/my-account/' target='_blank'>https://bober.services/my-account/</a><br>";
+        $message = "Ваши данные для входа в личный кабинет <a href='" . get_site_url() . "/my-account/' target='_blank'>" . get_site_url() . "/my-account/</a><br>";
         $message .= "Ваша почта: $user_email<br>Ваш пароль: $new_password";
 
         $headers = array(
@@ -973,7 +976,7 @@ function custom_user_registration_email($user_id) {
     $message .= "Почта: " . $user_email . "<br>";
 //    $message .= "Телефон: " . $billing_phone . "\n";
 //    $message .= "Компания: " . $user_company . "\n";
-    $message .= "Посмотреть: https://bober.services/users-list/";
+    $message .= "Посмотреть:" . get_site_url() . "/users-list/";
 
     // Отправляем письмо
     wp_mail('info@bober-service.ru, testdev@kometatek.ru', '«Бобёр-сервис». Новый пользователь', $message, $headers);
@@ -1138,3 +1141,111 @@ function get_arenda_price() {
         return '';
     }
 }
+
+
+
+add_action('wp_footer', function() {
+    if (!is_cart()) return;
+
+    $cart = WC()->cart->get_cart();
+    $categories_data = [];
+
+    foreach ($cart as $cart_item) {
+        $product = $cart_item['data'];
+        $terms = get_the_terms($product->get_id(), 'product_cat');
+        $parent_category = 'Без категории';
+
+        if ($terms && !is_wp_error($terms)) {
+            foreach ($terms as $term) {
+                // Поднимаемся вверх, пока не найдём самую верхнюю родительскую категорию
+                while ($term->parent != 0) {
+                    $term = get_term($term->parent, 'product_cat');
+                    if (!$term || is_wp_error($term)) break;
+                }
+                // Теперь $term содержит корневую категорию
+                $parent_category = $term->name;
+                break; // Достаточно первой найденной корневой категории
+            }
+        }
+
+        $categories_data[$product->get_name()] = $parent_category;
+    }
+
+    $json_categories = json_encode($categories_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    ?>
+    <div id="cart-product-categories" style="display: none;" data-categories='<?php echo $json_categories; ?>'></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("🔥 WooCommerce блоковая корзина загружена!");
+
+            function groupCartItems() {
+                let cartTable = document.querySelector('.wc-block-cart-items');
+                let cartTableBody = document.querySelector('.wc-block-cart-items tbody');
+                let cartHeaderRow = document.querySelector('.wc-block-cart-items__header');
+                if (cartHeaderRow) {
+                    cartHeaderRow.style.display = 'none';
+                }
+
+                if (!cartTable || !cartTableBody || !cartHeaderRow) {
+                    console.error("❌ Ошибка: таблица корзины не найдена!");
+                    return;
+                }
+
+                let columnCount = cartHeaderRow.querySelectorAll('th').length; // Определяем количество колонок
+
+                let cartRows = document.querySelectorAll('.wc-block-cart-items__row');
+                let categoriesData = document.getElementById('cart-product-categories');
+                if (!categoriesData) {
+                    console.error("❌ Ошибка: данные категорий не найдены!");
+                    return;
+                }
+
+                let categories = JSON.parse(categoriesData.getAttribute('data-categories'));
+                let grouped = {};
+
+                cartRows.forEach(row => {
+                    let productLink = row.querySelector('.wc-block-components-product-name');
+                    if (!productLink) return;
+
+                    let productName = productLink.textContent.trim();
+                    let category = categories[productName] || "Без категории";
+
+                    if (!grouped[category]) {
+                        grouped[category] = [];
+                    }
+                    grouped[category].push(row);
+                });
+
+                // Очищаем tbody, но оставляем структуру таблицы
+                cartTableBody.innerHTML = "";
+
+                for (let category in grouped) {
+                    let categoryRow = document.createElement("tr");
+                    categoryRow.className = "wc-block-cart-items__row";
+                    categoryRow.innerHTML = `<td colspan="${columnCount}" style="padding: 10px 4px 10px 16px;font-weight: bold;font-size: 23px;"><div>${category}</div></td>`;
+                    cartTableBody.appendChild(categoryRow);
+
+                    grouped[category].forEach(el => cartTableBody.appendChild(el));
+                }
+            }
+
+            setTimeout(groupCartItems, 500);
+        });
+    </script>
+    <style>
+        .cart-category-header td {
+            font-size: 22px;
+            font-weight: bold;
+            border-bottom: 2px solid #ddd;
+            padding: 10px 0;
+            margin-top: 20px;
+            text-align: left;
+        }
+    </style>
+    <?php
+});
+
+
+
+

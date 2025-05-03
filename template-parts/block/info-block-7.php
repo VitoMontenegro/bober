@@ -29,13 +29,13 @@
             <?php while( have_rows('info-block-7_item') ): the_row();
                 $count++;
                 ?>
-            
+
             <div class="info-block-7__item">
-                
+
                 <?php if(get_sub_field('info-block-7_item_text')){?>
                     <div class="info-block-7__item__text"><?php the_sub_field('info-block-7_item_text');?></div>
                 <?php } ?>
-                
+
                 <?php if($count == 1){//Только первый ?>
 
 
@@ -58,8 +58,17 @@
                     <img src="<?php echo get_template_directory_uri(); ?>/images/info-block-7-icon-<?php echo $count - 1;?>.svg" alt="icon" class="info-block-7__item__icon">
                     <?php } ?>
                 <?php } ?>
-                    <div class="info-block-7__item__num"><?php echo $count;?></div>
-                
+
+                <div class="info-block-7__item__num"><?php echo $count;?></div>
+                <?php if(get_sub_field('info-block-7_item_tg')): ?>
+                    <a href="<?php the_field('option_soc_telegram', 'option'); ?>" class="tg_btn" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="13" viewBox="0 0 16 13" fill="none">
+                            <path d="M0.746989 5.51062L14.9345 0.725235C15.593 0.517128 16.1681 0.865761 15.9548 1.73681L15.956 1.73573L13.5403 11.6916C13.3613 12.3975 12.8818 12.5691 12.2111 12.2366L8.53236 9.86478L6.758 11.3602C6.5618 11.5318 6.39626 11.6766 6.01613 11.6766L6.27731 8.4016L13.0952 3.01334C13.3919 2.78485 13.029 2.65613 12.6378 2.88354L4.21233 7.52411L0.580221 6.53292C-0.208249 6.31409 -0.225416 5.84317 0.746989 5.51062Z" fill="white"/>
+                        </svg>
+                        <span>Написать в Telegram</span>
+                    </a>
+                <?php endif; ?>
+
                 <div class="info-block-7__item__svg-wrap">
                     <svg width="478" height="478" viewBox="0 0 478 478" fill="none" xmlns="http://www.w3.org/2000/svg" style="">
                         <g opacity="0.2">

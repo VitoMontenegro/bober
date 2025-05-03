@@ -3,7 +3,9 @@
  * sigle-product (sigle-product_arenda.php)
  * @package WordPress
  */
-global $product;
+
+$product_id = get_the_ID();
+$product = wc_get_product($product_id);
 ?>
 <?php get_header(); ?>
 
@@ -187,9 +189,8 @@ global $product;
                             </div>
 
                         </div>
-
+                        <?php /*
                         <div class="product-detail__info-block">
-
                             <div class="product-detail__info-block__table__wrap">
                                 <div class="product-detail__info-block__table">
                                     <div class="product-detail__info-block__table__head">
@@ -465,6 +466,7 @@ global $product;
                                 </div>
                             </div>
                         </div>
+                        */ ?>
 
                         <div class="product-detail__info__btns">
 
@@ -486,6 +488,17 @@ global $product;
                                     <span>Консультация</span>
                                 </a>
                             <?php } ?>
+                            <?php if(get_field('option_soc_telegram', 'option')) { ?>
+                                <a href="<?php the_field('option_soc_telegram', 'option'); ?>" target="_blank" class="btn product-detail__info__btns__item btn-tg" target="_blank">
+                                    <i class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
+                                            <rect width="50" height="50" rx="25" fill="#E3F4FF"></rect>
+                                            <path d="M8.49398 23.5212L36.8691 13.9505C38.1861 13.5343 39.3363 14.2315 38.9095 15.9736L38.912 15.9715L34.0806 35.8832C33.7226 37.2949 32.7636 37.6382 31.4221 36.9731L24.0647 32.2296L20.516 35.2203C20.1236 35.5636 19.7925 35.8532 19.0323 35.8532L19.5546 29.3032L33.1904 18.5267C33.7839 18.0697 33.0579 17.8123 32.2756 18.2671L15.4247 27.5482L8.16044 25.5658C6.5835 25.1282 6.54917 24.1863 8.49398 23.5212Z" fill="#00BBFF"></path>
+                                        </svg>
+                                    </i>
+                                    <span>Консультация</span>
+                                </a>
+                            <?php } ?>
                         </div>
 
                     </div>
@@ -494,7 +507,7 @@ global $product;
             </div>
         </section>
 
-
+        <?php /*
         <section class="section calc-leasing__section product-detail__calc">
             <div class="container">
                 <h2 class="section-title">Калькулятор лизинга</h2>
@@ -576,7 +589,7 @@ global $product;
             </div>
         </section>
 
-
+        */ ?>
 
         <section class="section product-desc__section">
             <div class="container">

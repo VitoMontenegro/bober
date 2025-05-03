@@ -1,4 +1,13 @@
+<?php
 
+$blog_list = get_posts(array(
+    'posts_per_page'	=> -1,
+    'post_type'		=> 'post',
+));
+
+
+?>
+<?php if( $blog_list ): ?>
 <section class="section blog-slider__section">
     <div class="container">
         <div class="section__header">
@@ -11,12 +20,6 @@
             <a href="/blog/" class="btn btn-orange">Перейти в блог</a>
         </div>
 
-        <?php
-        $blog_list = get_posts(array(
-            'posts_per_page'	=> -1,
-            'post_type'		=> 'post',
-        ));
-        if( $blog_list ): ?>
 
         <div class="slider-default blog-slider">
             <div class="swiper-wrapper">
@@ -63,8 +66,8 @@
 
             <div class="swiper-pagination"></div>
 
-        <?php endif; ?>
 
         </div>
         <a href="/blog/" class="btn btn-orange btn-full-width btn__after-section">Перейти в блог</a>
 </section>
+<?php endif; ?>

@@ -5,7 +5,7 @@
 function ajax_product_search() {
     $search_query = sanitize_text_field($_POST['query']);
     $context = sanitize_text_field($_POST['context']); // Получаем контекст запроса
-
+    $search_query_lower = mb_strtolower($search_query);
 
     // Количество товаров
     $posts_per_page = 20;
@@ -35,6 +35,26 @@ function ajax_product_search() {
         $query->posts = array_merge($query->posts, $query_add->posts);
         $query->post_count = count($query->posts);
     }
+
+    if (preg_match('/\d/', $search_query_lower)) {
+        $args_add = array(
+            'post_type' => 'product',
+            'posts_per_page' => 10, // Количество выводимых товаров
+            'meta_query' => array(
+                array(
+                    'key' => '_sku', // Поиск по SKU
+                    'value' => $search_query_lower,
+                    'compare' => 'LIKE'
+                )
+            )
+        );
+        $query_add = new WP_Query($args_add);
+        // Объединяем результаты основного запроса и поиска по SKU
+        $query->posts = array_merge($query->posts, $query_add->posts);
+        $query->post_count = count($query->posts);
+    }
+
+
 
     // Дополнительный запрос для 'product_arenda'
     $search_query_lower = mb_strtolower($search_query);
